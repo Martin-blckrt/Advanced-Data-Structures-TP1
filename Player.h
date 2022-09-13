@@ -21,8 +21,21 @@ public:
     // Affichage
     void display() const;
 
+    // Remplisseur de deck
+    void addCardToDeck(Card const&);
+
+    // Ajout de cartes gagnées
+    void addWonCard (Card const&);
+
+    // Jouer une carte
+    Card playCard();
+
+    // Compter les points
+    int computePoints();
+
 private:
     std::string m_name;
+    int totalPoints;
     Pile<Card> m_deck, m_gain;
 };
 
