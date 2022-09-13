@@ -13,10 +13,14 @@ public:
     // Constructeur
     Card();
 
+    // Test
+    bool isEqual(Card const& b) const;
+
     // Accesseur
     int getNumber() const;
     bool getColor() const;
     int getBonus() const;
+    double getValue() const;
 
     // Affichage
     void display(std::ostream&) const;
@@ -28,5 +32,6 @@ private:
     int m_bonus;
 };
 
+bool operator==(Card const& a, Card const& b);
 
 #endif //BATAILLE_CARD_H
