@@ -13,9 +13,6 @@ public:
     // Constructeur
     Card();
 
-    // Test
-    bool isEqual(Card const& b) const;
-
     // Accesseur
     int getNumber() const;
     bool getColor() const;
@@ -26,12 +23,14 @@ public:
     void display(std::ostream&) const;
     friend std::ostream& operator<<(std::ostream&, Card const&);
 
+    bool operator==(Card const&);
+    bool operator>(Card const&);
+
 private:
     int m_number;
     bool m_color;
     int m_bonus;
 };
 
-bool operator==(Card const& a, Card const& b);
 
 #endif //BATAILLE_CARD_H

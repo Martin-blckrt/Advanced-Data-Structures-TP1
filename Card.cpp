@@ -15,11 +15,6 @@ Card::Card()
     m_bonus = rand() % 4 + 1; // NOLINT(cert-msc30-c, cert-msc50-cpp)
 }
 
-bool Card::isEqual(Card const& b) const
-{
-    return (m_number == b.m_number && m_color == b.m_color);
-}
-
 double Card::getValue() const
 {
     if (m_color)
@@ -31,10 +26,6 @@ double Card::getValue() const
         return m_number * 1 * m_bonus;
 
     }
-}
-bool operator==(Card const& a, Card const& b)
-{
-    return a.isEqual(b);
 }
 
 int Card::getNumber() const
@@ -69,21 +60,15 @@ void Card::display(ostream &flux) const
     cout << "________________________________________________" << endl;
 }
 
-bool operator>(Card const &a, Card const& b)
+bool Card::operator>(Card const& a)
 {
-    // Compare numbers first
-    if (a.getNumber() > b.getNumber())
-    {
-        return true;
-    }
-    if (a.getNumber() < b.getNumber())
-    {
-        return false;
-    }
-    // If equal numbers compare color
+    if (m_number != a.getNumber()) // Compare numbers first
+        return (m_number > a.getNumber());
     else
-    {
-        // Rouge = 1 | Noir = 0
-        return (a.getColor() > b.getColor());
-    }
+        return (m_color > a.getColor()); // Rouge = 1 | Noir = 0
+}
+
+bool Card::operator==(Card const& a)
+{
+    return (m_number == a.m_number && m_color == a.m_color);
 }
