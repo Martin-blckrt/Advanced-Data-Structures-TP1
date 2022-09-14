@@ -31,11 +31,11 @@ public:
     Card playCard();
 
     // Compter les points
-    int computePoints();
+    double computePoints();
 
 private:
     std::string m_name;
-    int totalPoints;
+    double totalPoints;
     Pile<Card> m_deck, m_gain;
 };
 

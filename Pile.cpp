@@ -27,6 +27,7 @@ Pile<T> :: Pile (const Pile<T>& p)
     for (int i=0; i< tailleMax;i+=1)
         tab[i]=p.tab[i];
     ind_sommet = p.ind_sommet;
+    ind_taille = 0;
 }
 
 //destructeur
@@ -40,7 +41,12 @@ Pile<T>::~Pile ()
 template <typename T>
 T Pile<T> :: depiler() noexcept(false)
 {
-    if (!estVide()) return tab[ind_sommet--];
+    if (!estVide())
+    {
+        T elem = tab[ind_sommet];
+        ind_sommet--;
+        return elem;
+    }
     else
         throw logic_error("Depiler: la pile est vide!");
 }
@@ -77,9 +83,9 @@ void Pile<T>::resize(const Pile<T>& p) noexcept(false)
 
 //surcharge =
 template <typename T>
-const Pile<T>& Pile<T>::operator =(const Pile<T>& p) noexcept(false)
+Pile<T>& Pile<T>::operator =(const Pile<T>& p) noexcept(false)
 {
-    if (tab!=0) delete [ ] tab; //on nettoie l’objet qu’on veux écraser
+    if (tab!=nullptr) delete [ ] tab; //on nettoie l’objet qu’on veux écraser
     tab=new T [p. tailleMax];
     tailleMax =p.tailleMax;
     for (int i=0; i< tailleMax;i+=1)
@@ -91,9 +97,10 @@ const Pile<T>& Pile<T>::operator =(const Pile<T>& p) noexcept(false)
 
 template<typename T>
 int Pile<T>::taille() const {
-    return tailleMax;
+    return ind_sommet + 1;
 }
 
+/*
 template<typename T>
 void Pile<T>::fillDeck() {
     for (int i = 0; i < tailleMax; i++)
@@ -101,7 +108,7 @@ void Pile<T>::fillDeck() {
         Card card;
         empiler(card);
     }
-}
+}*/
 
 template class Pile<Card>;
 

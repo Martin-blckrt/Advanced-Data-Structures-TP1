@@ -5,12 +5,17 @@
 #include "Player.h"
 #include <iostream>
 #include <string>
+#include <utility>
+#include "Pile.h"
 
 using namespace std;
 
-Player::Player(string name) : m_name(name)
+Player::Player(string name)
 {
-    m_deck(DECK_SIZE/2);
+    m_name = std::move(name);
+    m_gain = Pile<Card>();
+    m_deck = Pile<Card>();
+    totalPoints = 0;
 }
 
 string Player::getName() const
@@ -31,11 +36,11 @@ Card Player::playCard() {
     return c;
 }
 
-int Player::computePoints() {
+double Player::computePoints() {
     while (!m_gain.estVide())
     {
         Card a = m_gain.depiler();
-        totalPoints += a.compute();
+        totalPoints += a.getValue();
     }
     return totalPoints;
 }

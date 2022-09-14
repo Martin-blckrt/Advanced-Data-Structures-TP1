@@ -3,4 +3,4 @@ project(bataille)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(bataille main.cpp Player.cpp Player.h Card.cpp Card.h Pile.cpp Pile.h)
+add_executable(bataille main.cpp Player.cpp Player.h Card.cpp Card.h Pile.cpp Pile.h tools.cpp tools.h)

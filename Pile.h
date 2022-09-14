@@ -12,7 +12,7 @@ class Pile
 {
 public:
 // constructeurs et destructeurs
-    Pile(int max = MAX_PILE)  noexcept(false); //constructeur
+    explicit Pile(int max = MAX_PILE)  noexcept(false); //constructeur
     Pile(const Pile&); //constructeur copie
     ~Pile(); //destructeur
 // Modificateurs
@@ -22,18 +22,18 @@ public:
 //Sélecteurs
     bool estVide() const;
     int taille() const;
-    const T& sommet() const; // consulte l’élément au sommet
+    //const T& sommet() const; // consulte l’élément au sommet
 //surcharge d'opérateurs
-    const Pile<T>& operator = (const Pile<T>& p) noexcept(false);
+    Pile<T>& operator = (const Pile<T>& p) noexcept(false);
 /*
     friend std::ostream& operator<<(std::ostream&, Pile const&);
 
 
     void display(std::ostream &flux) const;
 */
-    void fillDeck(Pile<T>& p);
+    //void fillDeck(Pile<T>& p);
 
-    void fillDeck();
+    //void fillDeck();
 
 private: //Modèle d’implantation
     T* tab;
