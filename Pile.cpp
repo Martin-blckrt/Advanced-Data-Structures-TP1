@@ -70,17 +70,6 @@ void Pile<T> :: empiler(const T& e) noexcept(false)
         throw length_error("Empiler:la pile est pleine\n");
 }
 
-//resize
-template <typename T>
-void Pile<T>::resize(const Pile<T>& p) noexcept(false)
-{
-    int nouvelleTaille = ind_sommet++ * 2;
-    tab = new T [nouvelleTaille ];
-    for (int i=0; i< ind_sommet;i++)
-        tab[i] = p.tab[i];
-    tailleMax=nouvelleTaille;
-}
-
 //surcharge =
 template <typename T>
 Pile<T>& Pile<T>::operator =(const Pile<T>& p) noexcept(false)

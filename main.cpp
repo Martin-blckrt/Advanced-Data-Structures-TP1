@@ -11,7 +11,8 @@ int main() {
 
     // Initialize variables
     int deckSize;
-    string p1, p2;
+    string p1, p2, continueInput;
+    bool continueGame = true;
 
     // Get player names
     cout << "Hello what is player 1 name : " << endl;
@@ -34,9 +35,27 @@ int main() {
     // Distribute cards in players' decks
     distributeCards(p_deck, ptr_1, ptr_2, deckSize/2);
 
-    // Check for updated size of deck
-    cout << deckBataille.taille() << endl;
+    // Play the game
+    while (!player1.isDeckEmpty() && continueGame)
+    {
+        playTurn(ptr_1, ptr_2);
 
+        if (player1.isDeckEmpty())
+            continueGame = false;
+        else {
+            do {
+                cout << "Do you wish to continue the game ? (Y/N)" << endl;
+                cin >> continueInput;
+                if (continueInput == "N")
+                    continueGame = false;
+            }
+            while (continueInput != "Y" && continueInput != "N");
+        }
+    }
+
+    // Compute the players' points
+    player1.computePoints();
+    player2.computePoints();
 
    if (player1 > player2)
        cout << player1.getName() << " wins !" << endl;
