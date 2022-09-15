@@ -10,8 +10,8 @@
 #include "Player.h"
 
 int getDeckSize();
-Pile<Card> makeFillDeck(int size);
-void distributeCards(Pile<Card> *p, Player *p1, Player *p2, int num_cards);
-void playGame(Player*, Player*);
+Pile<Card> makeFillDeck(int);
+void distributeCards(Pile<Card>*, Player*, Player*, int);
+void playTurn(Player*, Player*);
 
 #endif //BATAILLE_TOOLS_H

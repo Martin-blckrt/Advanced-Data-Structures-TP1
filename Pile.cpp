@@ -15,7 +15,6 @@ Pile<T> :: Pile(int max) noexcept(false)
     tab = new T[max];
     ind_sommet = -1; //valeur dummy pour indiquer que la pile est vide.
     tailleMax = max;
-    ind_taille = 0;
 }
 
 //constructeur copie
@@ -27,7 +26,6 @@ Pile<T> :: Pile (const Pile<T>& p)
     for (int i=0; i< tailleMax;i+=1)
         tab[i]=p.tab[i];
     ind_sommet = p.ind_sommet;
-    ind_taille = 0;
 }
 
 //destructeur
@@ -74,7 +72,7 @@ void Pile<T> :: empiler(const T& e) noexcept(false)
 template <typename T>
 Pile<T>& Pile<T>::operator =(const Pile<T>& p) noexcept(false)
 {
-    if (tab!=nullptr) delete [ ] tab; //on nettoie l’objet qu’on veux écraser
+    if (tab!=nullptr) delete [ ] tab; //on nettoie l’objet qu’on veu écraser
     tab=new T [p. tailleMax];
     tailleMax =p.tailleMax;
     for (int i=0; i< tailleMax;i+=1)
@@ -89,28 +87,4 @@ int Pile<T>::taille() const {
     return ind_sommet + 1;
 }
 
-/*
-template<typename T>
-void Pile<T>::fillDeck() {
-    for (int i = 0; i < tailleMax; i++)
-    {
-        Card card;
-        empiler(card);
-    }
-}*/
-
 template class Pile<Card>;
-
-/*
-template <typename U>
-ostream& operator<<(ostream& flux, Pile<U> const& p)
-{
-    p.display(flux);
-    return flux;
-}
-
-template<> void Pile<int>::display(ostream &flux) const
-{
-    flux << "oh " << tailleMax << " cartes" << endl;
-}
-*/

@@ -11,34 +11,23 @@ template <typename T>
 class Pile
 {
 public:
-// constructeurs et destructeurs
+    // constructeurs et destructeurs
     explicit Pile(int max = MAX_PILE)  noexcept(false); //constructeur
     Pile(const Pile&); //constructeur copie
     ~Pile(); //destructeur
-// Modificateurs
+    // Modificateurs
     void empiler(const T&) noexcept(false);
     T depiler() noexcept(false);
-    void resize(const Pile<T>& p) noexcept(false);
-//Sélecteurs
+    //Sélecteurs
     bool estVide() const;
     int taille() const;
     //const T& sommet() const; // consulte l’élément au sommet
-//surcharge d'opérateurs
+    //surcharge d'opérateurs
     Pile<T>& operator = (const Pile<T>& p) noexcept(false);
-/*
-    friend std::ostream& operator<<(std::ostream&, Pile const&);
-
-
-    void display(std::ostream &flux) const;
-*/
-    //void fillDeck(Pile<T>& p);
-
-    //void fillDeck();
 
 private: //Modèle d’implantation
     T* tab;
     int ind_sommet; // indice de l’élément au sommet
-    int ind_taille;
     int tailleMax;
     static const int MAX_PILE = 100;
 };
