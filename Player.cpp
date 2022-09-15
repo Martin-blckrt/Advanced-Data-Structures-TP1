@@ -10,11 +10,11 @@
 
 using namespace std;
 
-Player::Player(string name)
+Player::Player(string name, int playerDeckSize)
 {
     m_name = std::move(name);
     m_gain = Pile<Card>();
-    m_deck = Pile<Card>();
+    m_deck = Pile<Card>(playerDeckSize);
     totalPoints = 0;
 }
 
@@ -42,10 +42,26 @@ double Player::computePoints() {
         Card a = m_gain.depiler();
         totalPoints += a.getValue();
     }
+    cout << m_name << " has " << totalPoints << " points." << endl;
     return totalPoints;
 }
 
 void Player::display() const
 {
     cout << "Hi ! My name is what, my name is who, my name is : " << m_name << endl;
+}
+
+bool Player::isDeckEmpty()
+{
+    return m_deck.estVide();
+}
+
+bool Player::operator>(Player const& p2)
+{
+    return totalPoints > p2.totalPoints;
+}
+
+bool Player::operator==(Player const& p2)
+{
+    return totalPoints == p2.totalPoints;
 }

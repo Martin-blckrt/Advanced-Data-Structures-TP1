@@ -12,5 +12,6 @@
 int getDeckSize();
 Pile<Card> makeFillDeck(int size);
 void distributeCards(Pile<Card> *p, Player *p1, Player *p2, int num_cards);
+void playGame(Player*, Player*);
 
 #endif //BATAILLE_TOOLS_H

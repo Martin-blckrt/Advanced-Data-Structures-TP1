@@ -13,7 +13,7 @@
 class Player {
 public:
     // Constructeur
-    explicit Player(std::string name);
+    explicit Player(std::string name, int);
 
     // Accesseur
     std::string getName() const;
@@ -32,6 +32,13 @@ public:
 
     // Compter les points
     double computePoints();
+
+    // Le deck est vide
+    bool isDeckEmpty();
+
+    // opérateurs surchargés
+    bool operator==(Player const&);
+    bool operator>(Player const&);
 
 private:
     std::string m_name;

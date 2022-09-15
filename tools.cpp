@@ -40,3 +40,22 @@ void distributeCards(Pile<Card> *deck ,Player *p1, Player *p2, int num_cards)
         p2->addCardToDeck(deck->depiler());
     }
 }
+
+void playGame(Player *p1, Player *p2)
+{
+    while (!p1->isDeckEmpty())
+    {
+        Card a = p1->playCard();
+        Card b = p2->playCard();
+
+        if (a > b) {
+            p1->addWonCard(a);
+            p1->addWonCard(b);
+        } else if (a == b) {
+            cout << "Egalite on fait comment" << endl;
+        } else {
+            p2->addWonCard(a);
+            p2->addWonCard(b);
+        }
+    }
+}

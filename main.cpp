@@ -19,14 +19,12 @@ int main() {
     cout << "Hello what is player 2 name : " << endl;
     cin >> p2;
 
-    // Initialize players
-    Player player1(p1), player2(p2);
-    cout << player1.getName() << endl;
-    cout << player2.getName() << endl;
-
     // Ask user for deck size and fill deck
     deckSize = getDeckSize();
     Pile<Card> deckBataille = makeFillDeck(deckSize);
+
+    // Initialize players
+    Player player1(p1, deckSize/2), player2(p2, deckSize/2);
 
     // Create pointers on players and game deck
     Player *ptr_1 = &player1;
@@ -40,35 +38,12 @@ int main() {
     cout << deckBataille.taille() << endl;
 
 
-   /*
-
-    while (!deckBataille.estVide())
-    {
-        a = player1.playCard();
-        b = player2.playCard();
-
-        if (a > b) {
-            player1.addWonCard(a);
-            player1.addWonCard(b);
-        } else if (a < b) {
-            player2.addWonCard(a);
-            player2.addWonCard(b);
-        } else {
-            cout << "Egalite on fait comment" << endl;
-        }
-    }
-
-    int p1_points = player1.computePoints();
-    int p2_points = player2.computePoints();
-
-    if (p1_points > p2_points) {
-        cout << player1 << " gagne !" << endl;
-    } else if (p1_points < p2_points) {
-        cout << player2 << " gagne !" << endl;
-    } else {
-        cout << "c'est une égalité !" << endl;
-    }*/
-
+   if (player1 > player2)
+       cout << player1.getName() << " wins !" << endl;
+   else if (player1 == player2)
+       cout << "It's a tie !" << endl;
+   else
+       cout << player2.getName() << " wins !" << endl;
 
     return 0;
 }
