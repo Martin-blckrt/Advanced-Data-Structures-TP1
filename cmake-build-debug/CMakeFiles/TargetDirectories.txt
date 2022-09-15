@@ -1,3 +1,0 @@
-C:/Users/marti/CLionProjects/the_war_card_game/cmake-build-debug/CMakeFiles/bataille.dir
-C:/Users/marti/CLionProjects/the_war_card_game/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/marti/CLionProjects/the_war_card_game/cmake-build-debug/CMakeFiles/rebuild_cache.dir

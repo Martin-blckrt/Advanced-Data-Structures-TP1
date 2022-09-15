@@ -1,0 +1,13 @@
+# ninja log v5
+4	546	6847998519381779	CMakeFiles/bataille.dir/main.cpp.obj	b1fc91e1eca3725d
+22	814	6849590813005399	CMakeFiles/bataille.dir/Card.cpp.obj	2148e18a17ccdb83
+419	569	6847997510941076	bataille.exe	e9b85196d394ee47
+5	816	6849590813045300	CMakeFiles/bataille.dir/Player.cpp.obj	bf3a5503675dac1
+16	821	6849590813065239	CMakeFiles/bataille.dir/Pile.cpp.obj	4819e2dc8c8d0592
+31	809	6849590812971556	CMakeFiles/bataille.dir/tools.cpp.obj	b619e49d59a726a6
+5	1010	6849714819419240	CMakeFiles/bataille.dir/Card.cpp.obj	eb2ff9780757d168
+14	1020	6849714819409257	CMakeFiles/bataille.dir/Pile.cpp.obj	67962127275cad2c
+39	1022	6849714819538908	CMakeFiles/bataille.dir/main.cpp.obj	b1fc91e1eca3725d
+33	1057	6849714819997675	CMakeFiles/bataille.dir/tools.cpp.obj	451051a3d680ff95
+71	1067	6849714820077468	CMakeFiles/bataille.dir/Player.cpp.obj	e6add403290bd11a
+1067	1323	6849714822619660	bataille.exe	5207fb080120313f
