@@ -18,6 +18,20 @@ Player::Player(string name, int playerDeckSize)
     totalPoints = 0;
 }
 
+Player ::Player(const Player& p)
+{
+    name = p.name;
+    m_gain = Pile<Card>();
+    m_deck = Pile<Card>(p.playerDeckSize);
+    totalPoints = 0;
+}
+
+Player::~Player()
+{
+    delete m_gain;
+    delete m_deck;
+}
+
 string Player::getName() const
 {
     return m_name;
@@ -64,4 +78,11 @@ bool Player::operator>(Player const& p2)
 bool Player::operator==(Player const& p2)
 {
     return totalPoints == p2.totalPoints;
+}
+
+Player* Player::resetPlayer()
+{
+    Player* ptr = new Player(*this);
+    ~Player;
+    return ptr;
 }

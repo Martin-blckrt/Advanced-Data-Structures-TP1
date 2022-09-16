@@ -32,6 +32,10 @@ public:
     template <typename U>
     friend std::ostream& operator <<(std::ostream& f, const File<U>& q);
 private: // Modèle d'implantation
+
+    // Martin trying stuff
+    void trierCarton();
+
     T* tab;
     int tete;
     int queue;

@@ -83,3 +83,11 @@ const File<T>& File<T>::operator =(const File<T>& p) throw (bad_alloc)
     return (*this);
 //retourner : une référence sur l ’objet courant
 }
+
+// Martin trying stuff
+
+template <typename T>
+void trierCarton()
+{
+
+}
