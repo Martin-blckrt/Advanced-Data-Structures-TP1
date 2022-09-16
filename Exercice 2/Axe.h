@@ -2,12 +2,12 @@
 #define EXERCICE_2_FILE_H
 
 #include <iostream>
+#include "Morceau.h"
 
 template<typename T>
 class Axe : public Morceau
 {
 public:
-
 	virtual void usiner();
 }
 
