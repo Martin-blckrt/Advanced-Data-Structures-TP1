@@ -43,21 +43,21 @@ void distributeCards(Pile<Card> *deck ,Player *p1, Player *p2, int num_cards)
 
 void playGame(Player* p1, Player* p2)
 {
-    while (!p1.isDeckEmpty())
+    while (!p1->isDeckEmpty())
     {
         playTurn(p1, p2);
     }
 
     // Compute the players' points
-    p1.computePoints();
-    p2.computePoints();
+    p1->computePoints();
+    p2->computePoints();
 
-    if (p1 > p2)
-        cout << p1.getName() << " wins !" << endl;
-    else if (p1 == p2)
+    if (*p1 > *p2)
+        cout << p1->getName() << " wins !" << endl;
+    else if (*p1 == *p2)
         cout << "It's a tie !" << endl;
     else
-        cout << p2.getName() << " wins !" << endl;
+        cout << p2->getName() << " wins !" << endl;
 }
 
 void playTurn(Player *p1, Player *p2)

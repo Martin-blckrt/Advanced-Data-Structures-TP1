@@ -15,9 +15,6 @@ public:
     // Constructeur
     explicit Player(std::string name, int);
 
-    // Constructeur de copie
-    Player(std::string name, int);
-
     // Accesseur
     std::string getName() const;
 
@@ -39,12 +36,9 @@ public:
     // Le deck est vide
     bool isDeckEmpty();
 
-    // Reset le joueur
-    Player* resetPlayer();
-
     // opérateurs surchargés
-    bool operator==(Player const&);
-    bool operator>(Player const&);
+    bool operator==(Player const&) const;
+    bool operator>(Player const&) const;
 
 private:
     std::string m_name;

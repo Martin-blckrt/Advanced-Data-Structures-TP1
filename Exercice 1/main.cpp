@@ -46,10 +46,6 @@ int main() {
             if (continueInput == "N")
                 continueGame = false;
         } while (continueInput != "Y" && continueInput != "N");
-
-        ~deckBataille~; // Delete the deck
-        ptr_1 = ptr_1->resetPlayer(); // Reset the players
-        ptr_2 = ptr_2->resetPlayer();
     }
 
     return 0;
