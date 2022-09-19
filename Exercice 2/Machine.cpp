@@ -5,7 +5,7 @@
 #include "Machine.h"
 using namespace std;
 
-Machine :: Machine(int tpsExec, int type) {
+Machine :: Machine(double tpsExec, int type) {
     m_temps_exec = tpsExec;
     m_type = type;
     m_en_panne = false;

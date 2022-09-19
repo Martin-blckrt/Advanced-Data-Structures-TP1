@@ -16,7 +16,7 @@
 class Machine {
 public:
     //Constructeur
-    Machine (int, int);
+    Machine (double, int);
 
     //Getter
     bool isWorking() const;
@@ -33,7 +33,7 @@ public:
     Piece removePiece();
 
 private:
-    int m_temps_exec;
+    double m_temps_exec;
     int m_type;
     bool m_en_panne;
     bool m_occupee;

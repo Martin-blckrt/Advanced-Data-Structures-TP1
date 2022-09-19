@@ -26,7 +26,7 @@ int main() {
 
     string axe("axe"), jupe("jupe"), tete("tete"), piston("piston");
 
-    vector<Piece*> pieces;
+    vector<Piece> pieces;
     File<Piece> dock(300);
 
     Machine *MA, *MJ, *MT, *MP;
@@ -34,8 +34,6 @@ int main() {
     MJ = new Machine(3, 1);
     MT = new Machine(2, 2);
     MP = new Machine(1, 3);
-
-    //Machine MA(150, axe), MJ(180, jupe), MT(120, tete), MP(60, piston);
 
     int compteurPieces = 0;
     int indexVector = 0;
@@ -45,55 +43,35 @@ int main() {
             .time_since_epoch()
             .count();
 
-    MA->addElemToQueue(0);
-    MA->addElemToQueue(0);
-    MJ->addElemToQueue(1);
-    MJ->addElemToQueue(1);
-
 
     // Initialize list of pieces to manufacture
     for (int i = 0; i < 100; i++)
     {
-        pieces.push_back();
-        pieces.push_back(p2);
-        pieces.push_back(p4);
+        pieces.emplace_back(Piece(0));
+        pieces.emplace_back(Piece(1));
+        pieces.emplace_back(Piece(2));
     }
-
-    //MA.testMethod(*p3);
 
     // Shuffle boxes to randomize pieces' order
     shuffle(pieces.begin(), pieces.end(), default_random_engine(seed));
-
     // Fill machines' queues
-    for (Piece* elem : pieces)
+    for (auto elem : pieces)
     {
-        cout << elem->getType() << endl;
-        auto type = elem->getType();
-        if (type == axe)
+        if (elem.getType() == 0) {
+            MA->addElemToQueue(elem);
+        } else if (elem.getType() == 1)
         {
-            cout << "in" << endl;
-            MA->addElemToQueue(*elem);
-        } else if (type == jupe)
+            MJ->addElemToQueue(elem);
+        } else if (elem.getType() == 2)
         {
-            cout << "in" << endl;
-            MJ->addElemToQueue(*elem);
-        } else {
-            cout << "in" << endl;
-            MT->addElemToQueue(*elem);
+            MT->addElemToQueue(elem);
+        } else
+        {
+            MP->addElemToQueue(elem);
         }
     }
-    cout << "test" << endl;
-    cout << MA->getQueueSize() << endl;
-    cout << "test2" << endl;
-    cout << MJ->getQueueSize() << endl;
-    cout << MT->getQueueSize() << endl;
 
-
-
-    while(compteurPieces < 100)
-    {
-        //dock.enfiler(pieces.at(indexVector));
-        indexVector++;
+    while(compteurPieces < 100) {
 
         // if the time is bigger (later) than the timeout time
         if (chrono::high_resolution_clock::now() > aResumeAt) {
@@ -108,7 +86,7 @@ int main() {
             aResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(2500)); // set the machine to resume later
         }
 
-        if (chrono::high_resolution_clock::now() > jResumeAt ) {
+        if (chrono::high_resolution_clock::now() > jResumeAt) {
             if (jManufactured) {
                 m = MJ->removePiece();
                 MP->addElemToQueue(m);
@@ -120,19 +98,19 @@ int main() {
             jResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(3000));
         }
 
-        if (chrono::high_resolution_clock::now() > tResumeAt ) {
+        if (chrono::high_resolution_clock::now() > tResumeAt) {
             if (tManufactured) {
-                    m = MT->removePiece();
-                    MP->addElemToQueue(m);
-                    tManufactured = false;
-                }
+                m = MT->removePiece();
+                MP->addElemToQueue(m);
+                tManufactured = false;
+            }
             tTimeOut = MT->work();
             if (tTimeOut == 2)
                 tManufactured = true;
             tResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(2000));
         }
 
-        if (chrono::high_resolution_clock::now() > pResumeAt ) {
+        if (chrono::high_resolution_clock::now() > pResumeAt) {
             pTimeOut = MP->work();
             if (pTimeOut == 1)
                 compteurPieces++;
