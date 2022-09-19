@@ -6,7 +6,5 @@
 #define BATAILLE_TOOLS_H
 
 
-// Martin trying stuff
-void trierCarton();
 
 #endif //BATAILLE_TOOLS_H

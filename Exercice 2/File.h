@@ -12,13 +12,13 @@ class File {
 
 public:
     // constructeurs et destructeurs:
-    File(int) throw (std::bad_alloc); //constructeur
+    File(int) noexcept(false); //constructeur
     File(const File &); //constructeur copie
     ~File(); //destructeur
 
     // Modificateurs
-    T enfiler(const T&) throw (std::length_error);
-    T defiler() throw (std::logic_error);
+    T enfiler(const T&) noexcept(false);
+    T defiler() noexcept(false);
 
     // Sélecteurs
     int taille() const;
@@ -28,9 +28,7 @@ public:
     const T& dernier() const; // queue de la file
 
     // Surcharges d'opérateurs
-    const File<T>& operator = (const File<T>&) throw (std::bad_alloc);
-    template <typename U>
-    friend std::ostream& operator <<(std::ostream& f, const File<U>& q);
+    const File<T>& operator = (const File<T>&) noexcept(false);
 private: // Modèle d'implantation
 
     T* tab;

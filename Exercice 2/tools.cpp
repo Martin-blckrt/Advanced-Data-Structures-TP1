@@ -5,10 +5,3 @@
 #include "tools.h"
 using namespace std;
 
-// Martin trying stuff
-
-template <typename T>
-void trierCarton()
-{
-
-}

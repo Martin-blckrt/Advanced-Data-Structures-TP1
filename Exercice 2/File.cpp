@@ -3,11 +3,13 @@
 //
 
 #include "File.h"
+#include "Piece.h"
+
 using namespace std;
 
 // Constructeur
 template <typename T>
-File<T> :: File (int max) throw (bad_alloc)
+File<T> :: File (int max) noexcept(false)
 {
     tab = new T [max];
     tete = 0;
@@ -25,7 +27,7 @@ File<T>::~File ()
 
 // Défiler
 template <typename T>
-T File<T> :: defiler() throw (logic_error)
+T File<T> :: defiler() noexcept(false)
 {
     if (cpt!=0)
     {
@@ -40,7 +42,7 @@ T File<T> :: defiler() throw (logic_error)
 
 // Enfiler
 template <typename T>
-T File<T> :: enfiler(const T& e) throw (length_error)
+T File<T> :: enfiler(const T& e) noexcept(false)
 {
     if(cpt<tailleMax)
     {
@@ -61,25 +63,28 @@ bool File<T> :: estVide () const {
 // estPleine
 template <typename T>
 bool File<T> :: estPleine () const {
-    return (queue == tailleMax); // BOF
+    return (queue == tailleMax);
 }
 
 // taille
 template<typename T>
 int File<T>::taille() const {
-    return queue; // BOF
+    return queue;
 }
 
 //surcharge =
 template <typename T>
-const File<T>& File<T>::operator =(const File<T>& p) throw (bad_alloc)
+const File<T>& File<T>::operator =(const File<T>& f) noexcept(false)
 {
     if (tab!=nullptr) delete [ ] tab; //on nettoie l’objet qu’on veu écraser
-    tab=new T [p. tailleMax];
-    tailleMax =p.tailleMax;
+    tab=new T [f. tailleMax];
+    tailleMax =f.tailleMax;
     for (int i=0; i< tailleMax;i+=1)
-        tab[i]=p.tab[i];
+        tab[i]=f.tab[i];
     //ind_sommet = p.ind_sommet;
     return (*this);
 //retourner : une référence sur l ’objet courant
 }
+
+
+template class File<Piece>;
