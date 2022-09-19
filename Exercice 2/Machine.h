@@ -4,6 +4,10 @@
 
 #ifndef EXERCICE_2_MACHINE_H
 #define EXERCICE_2_MACHINE_H
+#define AXE 0
+#define JUPE 1
+#define TETE 2
+#define PISTON 3
 
 #include "File.h"
 #include "Piece.h"
@@ -23,11 +27,10 @@ public:
     void setState();
     void setBreak();
 
-    void addElemToQueue(int);
-    int work();
-    int manufacture();
+    void addElemToQueue(Piece);
+    double work();
+    double manufacture();
     Piece removePiece();
-    void testMethod(Piece);
 
 private:
     int m_temps_exec;

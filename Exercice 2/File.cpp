@@ -57,7 +57,7 @@ T File<T> :: enfiler(const T& e) noexcept(false)
 // estVide
 template <typename T>
 bool File<T> :: estVide () const {
-    return (tete == 0); // BOF
+    return (cpt == 0); // BOF
 }
 
 // estPleine

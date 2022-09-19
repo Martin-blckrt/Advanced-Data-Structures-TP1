@@ -12,7 +12,7 @@ Machine :: Machine(int tpsExec, int type) {
     m_occupee = false;
     m_file_test = new File<Piece>(100);
 
-    if (type == 3) {
+    if (type == PISTON) {
         axeU = new File<Piece>(100);
         jupeU = new File<Piece>(100);
         teteU = new File<Piece>(100);
@@ -43,42 +43,36 @@ void Machine :: setBreak() {
         m_en_panne = true;
 }
 
-void Machine :: testMethod(Piece p)
-{
-    string name("tete");
-    m_file_test->enfiler(p);
-}
-
-void Machine :: addElemToQueue(int type) {
-    if (type == 0)
+void Machine :: addElemToQueue(Piece p) {
+    if (m_type == PISTON)
     {
-        //auto new_p = new Piece(type);
-        toManufacture->enfiler(Piece(type));
+        if (p.getType() == AXE)
+            axeU->enfiler(p);
+        if (p.getType() == JUPE)
+            jupeU->enfiler(p);
+        if (p.getType() == TETE)
+            teteU->enfiler(p);
     }
-    else if (type == 1)
-    {
-        toManufacture->enfiler(Piece(type));
-
-    }
-    else if (type == 2)
-    {
-        toManufacture->enfiler(Piece(type));
-    } else
-    {
-        cout << "autre ? piston ?" << endl;
-    }
-
+    else if (m_type == 0 || m_type == 1 || m_type == 2)
+        toManufacture->enfiler(p);
 }
 
 int Machine :: getQueueSize() {
     return toManufacture->taille();
 }
 
-int Machine :: work() {
-    //
-    if (m_type == 3) {
-        if (!axeU->estVide() && !jupeU->estVide() && !teteU->estVide())
-            return manufacture();
+double Machine :: work() {
+    // If machine is MP, check if it has 3 pieces before trying to work
+    if (m_type == PISTON) {
+        if (!axeU->estVide() && !jupeU->estVide() && !teteU->estVide()) {
+            // if machine isnt broken down, manufacture the piece
+            if (!m_en_panne) {
+                return manufacture();
+            } else { // if machine is broken down, unbreak it and send back repair time
+                m_en_panne = false;
+                return (5 + (rand() % 5)); // repair time
+            }
+        }
     } else
     {
         if (!toManufacture->estVide()) {
@@ -86,22 +80,22 @@ int Machine :: work() {
                 return manufacture();
             } else {
                 m_en_panne = false;
-                return (300 + (rand() % 300)); // repair time
+                return (5 + (rand() % 5)); // repair time
             }
         } else {
-            return 999999999;
+            return 999999999; // all pieces of this machine have been manufactured, dont need it anymore
         }
     }
     return 0;
 }
 
-int Machine :: manufacture() {
-    if (m_type == 3) {
+double Machine :: manufacture() {
+    if (m_type == PISTON) { // if machine is MP, get rid of the three pieces
         axeU->defiler();
         jupeU->defiler();
         teteU->defiler();
     }
-    if (((double)rand() / RAND_MAX) < 0.25)
+    if (((double)rand() / RAND_MAX) < 0.25) // generate random chance on panne
         m_en_panne = true;
     return m_temps_exec;
 }

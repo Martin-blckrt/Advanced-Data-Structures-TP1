@@ -15,7 +15,7 @@ int main() {
     // Declare variables
     srand(time(nullptr));
 
-    int pTimeOut, aTimeOut, jTimeOut, tTimeOut;
+    double pTimeOut = 0, aTimeOut = 0, jTimeOut = 0, tTimeOut = 0;
     auto startTime = chrono::high_resolution_clock::now();
     auto pResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(0));
     auto aResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(0));
@@ -30,10 +30,10 @@ int main() {
     File<Piece> dock(300);
 
     Machine *MA, *MJ, *MT, *MP;
-    MA = new Machine(150, 0);
-    MJ = new Machine(180, 1);
-    MT = new Machine(120, 2);
-    MP = new Machine(60, 3);
+    MA = new Machine(2.5, 0);
+    MJ = new Machine(3, 1);
+    MT = new Machine(2, 2);
+    MP = new Machine(1, 3);
 
     //Machine MA(150, axe), MJ(180, jupe), MT(120, tete), MP(60, piston);
 
@@ -95,17 +95,17 @@ int main() {
         //dock.enfiler(pieces.at(indexVector));
         indexVector++;
 
-
-        if (chrono::high_resolution_clock::now() > aResumeAt ) {
-            if (aManufactured) {
-                m = MA->removePiece();
-                MP->addElemToQueue(m);
-                aManufactured = false;
+        // if the time is bigger (later) than the timeout time
+        if (chrono::high_resolution_clock::now() > aResumeAt) {
+            if (aManufactured) { // if a piece was manufactured
+                m = MA->removePiece(); // remove it from the machine
+                MP->addElemToQueue(m); // add it to the piston machine
+                aManufactured = false; // set back to false
             }
-            aTimeOut = MA->work();
-            if (aTimeOut == 150) // a piece has started manufacturing but is going to be manufactured in aTimeOut
+            aTimeOut = MA->work(); // try to work on machine, returns exec time or breakdown time
+            if (aTimeOut == 2.5) // a piece has started manufacturing but is going to be manufactured in aTimeOut
                 aManufactured = true;
-            aResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(aTimeOut));
+            aResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(2500)); // set the machine to resume later
         }
 
         if (chrono::high_resolution_clock::now() > jResumeAt ) {
@@ -115,9 +115,9 @@ int main() {
                 jManufactured = false;
             }
             jTimeOut = MJ->work();
-            if (jTimeOut == 180) // a piece has started manufacturing but is going to be manufactured in aTimeOut
+            if (jTimeOut == 3) // a piece has started manufacturing but is going to be manufactured in aTimeOut
                 jManufactured = true;
-            jResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(jTimeOut));
+            jResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(3000));
         }
 
         if (chrono::high_resolution_clock::now() > tResumeAt ) {
@@ -127,19 +127,26 @@ int main() {
                     tManufactured = false;
                 }
             tTimeOut = MT->work();
-            if (tTimeOut == 120) // a piece has started manufacturing but is going to be manufactured in aTimeOut
+            if (tTimeOut == 2)
                 tManufactured = true;
-            tResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(tTimeOut));
+            tResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(2000));
         }
 
         if (chrono::high_resolution_clock::now() > pResumeAt ) {
             pTimeOut = MP->work();
-            if (pTimeOut == 60) // a piece has started manufacturing but is going to be manufactured in aTimeOut
+            if (pTimeOut == 1)
                 compteurPieces++;
-            pResumeAt = (chrono::high_resolution_clock::now() + chrono::seconds(pTimeOut));
+            pResumeAt = (chrono::high_resolution_clock::now() + chrono::milliseconds(1000));
         }
 
-    }*/
+    }
+
+    auto endTime = chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> diff = endTime - startTime;
+    double time_ms = diff.count();
+
+    cout << "Time to produce 100 pistons : " << int(time_ms / 60) << "min and " << int(time_ms) % 60 << "s" << endl;
 
     return 0;
 }
