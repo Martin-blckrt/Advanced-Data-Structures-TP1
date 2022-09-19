@@ -10,14 +10,14 @@ Piece :: Piece (int type) {
     m_type = type;
 }
 
-Piece :: Piece() {
 
-}
+Piece :: Piece() = default;
 
 int Piece :: getType() const {
     return m_type;
 }
 
+/*
 void Piece :: setType(int &i) {
     m_type = i;
-}
+}*/

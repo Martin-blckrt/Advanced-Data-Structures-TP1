@@ -59,7 +59,7 @@ template <typename T>
 bool File<T> :: estVide () const {
     return (cpt == 0); // BOF
 }
-
+/*
 // estPleine
 template <typename T>
 bool File<T> :: estPleine () const {
@@ -70,7 +70,7 @@ bool File<T> :: estPleine () const {
 template<typename T>
 int File<T>::taille() const {
     return queue;
-}
+}*/
 
 //surcharge =
 template <typename T>
@@ -85,6 +85,5 @@ const File<T>& File<T>::operator =(const File<T>& f) noexcept(false)
     return (*this);
 //retourner : une référence sur l ’objet courant
 }
-
 
 template class File<Piece>;

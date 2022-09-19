@@ -10,14 +10,14 @@
 class Piece {
 public:
     //Constructeur
-    Piece(int);
+    explicit Piece(int);
     explicit Piece();
 
     //Getter
     int getType() const;
 
     //Setter
-    void setType(int&);
+    //void setType(int&);
 
 private:
     int m_type;

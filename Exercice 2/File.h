@@ -13,7 +13,7 @@ class File {
 public:
     // constructeurs et destructeurs:
     File(int) noexcept(false); //constructeur
-    File(const File &); //constructeur copie
+    //File(const File &); //constructeur copie
     ~File(); //destructeur
 
     // Modificateurs
@@ -21,11 +21,11 @@ public:
     T defiler() noexcept(false);
 
     // Sélecteurs
-    int taille() const;
+    //int taille() const;
     bool estVide() const;
-    bool estPleine() const;
-    const T& premier() const; // tête de la file
-    const T& dernier() const; // queue de la file
+    //bool estPleine() const;
+    //const T& premier() const; // tête de la file
+    //const T& dernier() const; // queue de la file
 
     // Surcharges d'opérateurs
     const File<T>& operator = (const File<T>&) noexcept(false);

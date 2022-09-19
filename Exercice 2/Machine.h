@@ -19,13 +19,13 @@ public:
     Machine (double, int);
 
     //Getter
-    bool isWorking() const;
-    bool isBroken() const;
-    int getQueueSize();
+    //bool isWorking() const;
+    //bool isBroken() const;
+    //int getQueueSize();
 
     //Setter
-    void setState();
-    void setBreak();
+    //void setState();
+    //void setBreak();
 
     void addElemToQueue(Piece);
     double work();
@@ -36,12 +36,11 @@ private:
     double m_temps_exec;
     int m_type;
     bool m_en_panne;
-    bool m_occupee;
+    //bool m_occupee;
     File<Piece> *toManufacture;
     File<Piece> *axeU;
     File<Piece> *jupeU;
     File<Piece> *teteU;
-    File<Piece> *m_file_test;
 };
 
 
