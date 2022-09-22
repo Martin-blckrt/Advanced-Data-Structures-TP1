@@ -5,80 +5,109 @@
 #include "Arbre.h"
 #include <iostream>
 
+// Constructeur
 template<typename E>
-const E& Arbre<E>::max()const throw (std::logic_error)
+Arbre<E> :: Arbre() {
+
+}
+
+// Constructeur de copie
+template<typename E>
+Arbre<E> :: Arbre(const Arbre& source) {
+
+}
+
+// Destructeur
+template<typename E>
+Arbre<E> :: ~Arbre() {
+
+}
+
+template<typename E>
+bool Arbre<E>::estVide() const {
+    return root == 0;
+}
+
+template<typename E>
+const E& Arbre<E>::max()const
 {
     if (cpt==0)
         throw std::logic_error("max: l'arbre est vide!\n");
-    if (racine->droite == 0)
+    if (root->right == 0)
     {
-        return racine->data;
+        return root->data;
     }
-    Noeud * temp = racine->droite;
-    while (temp->droite!=0)
-        temp = temp->droite;
+    Node * temp = root->right;
+    while (temp->right!=0)
+        temp = temp->right;
     return temp->data;
+}
+
+template<typename E>
+const E& Arbre<E>::min()const
+{
+
 }
 
 template<typename E>
 int Arbre<E>:: nbNoeuds() const
 {
-    return _nbNoeuds(racine);
+    return _nbNoeuds(root);
 }
 template<typename E>
-int Arbre<E>:: _nbNoeuds(Noeud* arb) const
+int Arbre<E>:: _nbNoeuds(Node* arb) const
 {
     if (arb==0)
         return 0;
-    return _nbNoeuds(arb->gauche) + _nbNoeuds(arb->droite) + 1;
+    return _nbNoeuds(arb->left) + _nbNoeuds(arb->right) + 1;
 }
 
 template<typename E>
 int Arbre<E>::nbFeuilles() const
 {
-    return _nbFeuilles(racine);
+    return _nbFeuilles(root);
 }
 template<typename E>
-int Arbre<E>::_nbFeuilles(Noeud*arb) const
+int Arbre<E>::_nbFeuilles(Node*arb) const
 {
     int nbG (0), nbD(0);
     if (arb != 0)
     {
-        if (arb->gauche == 0 && arb->droite == 0)
+        if (arb->left == 0 && arb->right == 0)
             return 1;
         else
         {
-            if (arb->gauche != 0)
-                nbG = _nbFeuilles(arb->gauche);
-            if (arb->droite != 0)
-                nbD = _nbFeuilles(arb->droite);
+            if (arb->left != 0)
+                nbG = _nbFeuilles(arb->left);
+            if (arb->right != 0)
+                nbD = _nbFeuilles(arb->right);
         }
     }
     return nbG + nbD;
 }
 
 template<typename E>
-int Arbre<E>::hauteur() const throw (std::logic_error)
+int Arbre<E>::hauteur() const
 {
     if (cpt==0)
         throw std::logic_error("hauteur: l'arbre est vide!\n");
-    return _hauteurParcours(racine);
+    return _hauteurParcours(root);
 }
 template<typename E>
-int Arbre<E>::_hauteurParcours(Noeud * arb) const
+int Arbre<E>::_hauteurParcours(Node * arb) const
 {
     if (arb==0)
         return -1;
-    return 1 + _maximum(_hauteur(arb->gauche), _hauteur(arb->droite));
+    return 1 + _maximum(_hauteur(arb->left), _hauteur(arb->right));
 }
 
 template<typename E>
 bool Arbre<E>:: appartient(const E &data) const
 {
-    return _auxAppartient(racine, data)!=0;
+    return _auxAppartient(root, data)!=0;
 }
 template<typename E>
-typename Arbre<E>:: Noeud* Arbre<E>:: _auxAppartient(Noeud*
+typename Arbre<E>:: Node* Arbre<E>:: _auxAppartient(Node*
 arbre, const E &data) const
 {
     if (arbre == 0)
@@ -86,22 +115,21 @@ arbre, const E &data) const
     if ( arbre->data == data )
         return arbre;
     if ( arbre->data > data )
-        return _auxAppartient(arbre->gauche, data);
+        return _auxAppartient(arbre->left, data);
     else
-        return _auxAppartient(arbre->droite, data);
+        return _auxAppartient(arbre->right, data);
 }
 
 template <typename E>
-const E& Arbre<E>:: parent(const E& el) const throw(std::logic_error)
+const E& Arbre<E>:: parent(const E& el) const
 {
-    Noeud* noeudDeEl = _auxAppartient(racine, el);
-    Noeud* parentDeEl = _parent(racine, noeudDeEl);
+    Node* noeudDeEl = _auxAppartient(root, el);
+    Node* parentDeEl = _parent(root, noeudDeEl);
     return parentDeEl->data;
 }
 
 template <typename E>
-typename Arbre<E>:: Noeud* Arbre<E>:: _parent(Noeud* arb, Noeud* sArb) const
-throw(std::logic_error)
+typename Arbre<E>:: Node* Arbre<E>:: _parent(Node* arb, Node* sArb) const
 {
     if (arb == 0)
         throw std::logic_error("parent: l'arbre est vide!\n");
@@ -111,37 +139,41 @@ throw(std::logic_error)
         throw std::logic_error("parent: Le parent de la racine d'existe pas!\n");
     if ( sArb->data < arb-> data )
     {
-        if (arb->gauche == sArb) return arb;
-        else return _parent(arb->gauche, sArb);
+        if (arb->left == sArb) return arb;
+        else return _parent(arb->left, sArb);
     }
     else
     {
-        if (arb->droite == sArb) return arb;
-        else return _parent(arb->droite, sArb);
+        if (arb->right == sArb) return arb;
+        else return _parent(arb->right, sArb);
     }
 }
 
 template <typename E>
-E Arbre<E>:: successeur(const E& info) const throw(std::logic_error)
+E Arbre<E>:: successeur(const E& info) const
 {
-    return _successeur(racine, info);
+    return _successeur(root, info);
 }
 template <typename E>
-E Arbre<E>:: _successeur(Noeud* arb, const E& info) throw (std::logic_error)
+E Arbre<E>:: _successeur(Node* arb, const E& info)
 {
     if (cpt == 0)
         throw std::logic_error("successeur: l'arbre est vide!\n");
-    Noeud* sArb = _auxAppartient(racine, info);
+    Node* sArb = _auxAppartient(root, info);
     if (sArb == 0)
         throw std::logic_error("successeur: l'element n'existe pas!\n");
     if ( info == _max(arb))
         throw std::logic_error("successeur: l'element est le max dans l'arbre!\n");
-    if (sArb->droite != 0)
-        return _min(sArb->droite);
+    if (sArb->right != 0)
+        return _min(sArb->right);
     else
     {
-        Noeud * pere = _parent(arb, sArb);
+        Node * pere = _parent(arb, sArb);
         while (pere->data < sArb->data ) pere = _parent(arb,pere);
         return pere->data;
     }
 }
+
+
+// -------------------- NODE -----------------------
+

@@ -10,41 +10,56 @@
 template <typename E>
 class Arbre
 {
+private:
+// classe Node
+    class Node
+    {
+    public:
+        E data;
+        Node *left;
+        Node *right;
+        int card;
+        int height;
+        Node( const E&d ): left(0),data( d ),right(0),height(0) { }
+    };
+// Les membres données
+    Node * root; //racine de l'arbre
+    int cpt; // Nombre de noeuds dans l'arbre
+// Les membres méthodes privés
+//...
+
 public:
     //..Les méthodes publiques (i.e. les opérateurs)
     //Constructeurs
     Arbre();
-    Arbre(const Arbre& source) ;
+    Arbre(const Arbre&) ;
     //Destructeur
     ~Arbre();
     //Les fonctions membres
     bool estVide() const;
     long taille() const;
-    const E & max() const;
-    const E & min() const ;
+
+    const E& max() const;
+    const E& min() const ;
+
     int nbNoeuds()const;
+    int _nbNoeuds(Node*) const;
+
     int nbFeuilles()const;
+    int _nbFeuilles(Node*) const;
+
     int hauteur() const;
+    int _hauteurParcours(Node*) const;
+
     bool appartient(const E &) const;
+    Node* _auxAppartient(Node*, const E&) const;
+
     const E& parent(const E&) const;
+    Node* _parent(Node*, Node*) const;
+
     E successeur(const E& ) const;
-    void lister(std::vector<E>&) const;
-private:
-// classe Noeud
-    class Noeud
-    { public:
-        E data;
-        Noeud *gauche;
-        Noeud *droite;
-        int card;
-        int hauteur;
-        Noeud( const E&d ): gauche(0),data( d ),droite(0),hauteur(0) { }
-    };
-// Les membres données
-    Noeud * racine; //racine de l'arbre
-    int cpt; // Nombre de noeuds dans l'arbre
-// Les membres méthodes privés
-//...
+    E _successeur(Node*, const E&);
+
 };
 
 
