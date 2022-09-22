@@ -265,11 +265,25 @@ void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) const{
         cout << (isLeftNode ? "|--" : "L--"); // if left node : |--, L-- otherwise
         cout << n->data << endl;
 
-        afficherArbre( prefix + (isLeftNode ? "│   " : "    "), n->left, true);
-        afficherArbre( prefix + (isLeftNode ? "│   " : "    "), n->right, false);
+        afficherArbre( prefix + (isLeftNode ? "|   " : "    "), n->right, true);
+        afficherArbre( prefix + (isLeftNode ? "|   " : "    "), n->left, false);
     }
 }
 
+ostream &operator<<(ostream & output, const Arbre& a) {
+    a.afficherArbre("", a.root, false);
+    return output;
+
+}
+
+
+bool Arbre::chercherMot(const string s) {
+    if (s.size() == 0)
+        return false;
+
+
+
+}
 /*
 template <typename E>
 void Arbre<E>::enleverMot(string s);
