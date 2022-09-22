@@ -5,31 +5,29 @@
 #include "Arbre.h"
 #include <iostream>
 
-// Constructeur
-template<typename E>
-Arbre<E> :: Arbre() {
+using namespace std;
 
+// Constructeur
+Arbre :: Arbre() {
+    root = new Node('Z');
+    cpt = 0;
 }
 
 // Constructeur de copie
-template<typename E>
-Arbre<E> :: Arbre(const Arbre& source) {
+Arbre :: Arbre(const Arbre& source) {
 
 }
 
 // Destructeur
-template<typename E>
-Arbre<E> :: ~Arbre() {
+Arbre :: ~Arbre() {
 
 }
 
-template<typename E>
-bool Arbre<E>::estVide() const {
+bool Arbre::estVide() const {
     return root == 0;
 }
-
-template<typename E>
-const E& Arbre<E>::max()const
+/*
+const char& Arbre<E>::max()const
 {
     if (cpt==0)
         throw std::logic_error("max: l'arbre est vide!\n");
@@ -44,9 +42,42 @@ const E& Arbre<E>::max()const
 }
 
 template<typename E>
+const E& Arbre<E>::_max(Node* arb)const {
+    if (cpt == 0)
+        throw std::logic_error("max: l'arbre est vide!\n");
+    if (arb->right == 0) {
+        return arb->data;
+    }
+    Node *temp = arb->right;
+    while (temp->right != 0)
+        temp = temp->right;
+}
+
+template<typename E>
 const E& Arbre<E>::min()const
 {
+    if (cpt==0)
+        throw std::logic_error("max: l'arbre est vide!\n");
+    if (root->left == 0)
+    {
+        return root->data;
+    }
+    Node * temp = root->left;
+    while (temp->left!=0)
+        temp = temp->left;
+    return temp->data;
+}
 
+template<typename E>
+const E& Arbre<E>::_min(Node* arb)const {
+    if (cpt == 0)
+        throw std::logic_error("max: l'arbre est vide!\n");
+    if (arb->left == 0) {
+        return arb->data;
+    }
+    Node *temp = arb->left;
+    while (temp->left != 0)
+        temp = temp->left;
 }
 
 template<typename E>
@@ -93,12 +124,13 @@ int Arbre<E>::hauteur() const
         throw std::logic_error("hauteur: l'arbre est vide!\n");
     return _hauteurParcours(root);
 }
+
 template<typename E>
 int Arbre<E>::_hauteurParcours(Node * arb) const
 {
     if (arb==0)
         return -1;
-    return 1 + _maximum(_hauteur(arb->left), _hauteur(arb->right));
+    return 1 + _maximum(_hauteurParcours(arb->left), _hauteurParcours(arb->right));
 }
 
 template<typename E>
@@ -154,8 +186,9 @@ E Arbre<E>:: successeur(const E& info) const
 {
     return _successeur(root, info);
 }
+
 template <typename E>
-E Arbre<E>:: _successeur(Node* arb, const E& info)
+E Arbre<E>:: _successeur(Node* arb, const E& info) const
 {
     if (cpt == 0)
         throw std::logic_error("successeur: l'arbre est vide!\n");
@@ -173,7 +206,83 @@ E Arbre<E>:: _successeur(Node* arb, const E& info)
         return pere->data;
     }
 }
+*/
+//Getter
 
+
+// Exercice
+void Arbre::firstAjouterMot(string s)
+{
+    ajouterMot(s, root);
+}
+
+void Arbre::ajouterMot(string s, Node* cur)
+{
+    // if word is not in dico
+
+    Node* previous = nullptr;
+    Node* current = cur;
+
+    char letter = s.at(0);
+
+    while (current != nullptr && current->data < letter) {
+        previous = current;
+        current = current->right;
+    }
+
+    if (current == nullptr || current->data > letter) {
+        prepareBrutePlace(s, previous, current);
+    } else if (current->data == letter) {
+        previous = current;
+        current = current->left;
+        ajouterMot(s.erase(0,1), current);
+    }
+}
+
+void Arbre::prepareBrutePlace(string s, Node* prev, Node* cur) {
+    Node* newNode = new Node(s.at(0));
+    if (cur != nullptr) {
+        newNode->right = prev->right;
+    }
+    Node* current = newNode;
+    prev->right = newNode;
+    brutePlaceWord(s.erase(0,1), current);
+}
+
+void Arbre :: brutePlaceWord(string s, Node* cur) {
+
+    for (char letter : s) {
+        Node* newNode = new Node(letter);
+        cur->left = newNode;
+    }
+}
+
+void Arbre::afficherDict() {
+    afficherArbre("", root, false);
+}
+
+void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) {
+    //https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c
+    if (n != nullptr) {
+
+        cout << prefix;
+        cout << (isLeftNode ? "├──" : "└──");
+        cout << n->data << endl;
+
+        afficherArbre( prefix + (isLeftNode ? "│   " : "    "), n->left, true);
+        afficherArbre( prefix + (isLeftNode ? "│   " : "    "), n->right, false);
+    }
+}
+
+/*
+template <typename E>
+void Arbre<E>::enleveMot(string s);
+
+template <typename E>
+void Arbre<E>::afficherDict();
+
+template <typename E>
+bool Arbre<E>::chercheMot(string s);*/
 
 // -------------------- NODE -----------------------
 
