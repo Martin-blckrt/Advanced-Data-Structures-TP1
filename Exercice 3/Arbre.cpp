@@ -213,14 +213,14 @@ E Arbre<E>:: _successeur(Node* arb, const E& info) const
 // Exercice
 void Arbre::firstAjouterMot(string s)
 {
-    ajouterMot(s, root);
+    ajouterMot(s, root, nullptr);
 }
 
-void Arbre::ajouterMot(string s, Node* cur)
+void Arbre::ajouterMot(string s, Node* cur, Node* prev)
 {
     // if word is not in dico
 
-    Node* previous = nullptr;
+    Node* previous = prev;
     Node* current = cur;
 
     char letter = s.at(0);
@@ -231,15 +231,14 @@ void Arbre::ajouterMot(string s, Node* cur)
     }
 
     if (current == nullptr || current->data > letter) {
-        prepareBrutePlace(s, previous, current);
+        prepareBrutePlace(s, current, previous);
     } else if (current->data == letter) {
-        previous = current;
         current = current->left;
-        ajouterMot(s.erase(0,1), current);
+        ajouterMot(s.erase(0,1), current, previous);
     }
 }
 
-void Arbre::prepareBrutePlace(string s, Node* prev, Node* cur) {
+void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
     Node* newNode = new Node(s.at(0));
     if (cur != nullptr) {
         newNode->right = prev->right;
@@ -254,19 +253,16 @@ void Arbre :: brutePlaceWord(string s, Node* cur) {
     for (char letter : s) {
         Node* newNode = new Node(letter);
         cur->left = newNode;
+        cur = newNode;
     }
 }
 
-void Arbre::afficherDict() {
-    afficherArbre("", root, false);
-}
-
-void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) {
+void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) const{
     //https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c
     if (n != nullptr) {
 
         cout << prefix;
-        cout << (isLeftNode ? "├──" : "└──");
+        cout << (isLeftNode ? "|--" : "L--"); // if left node : |--, L-- otherwise
         cout << n->data << endl;
 
         afficherArbre( prefix + (isLeftNode ? "│   " : "    "), n->left, true);
@@ -276,13 +272,11 @@ void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) {
 
 /*
 template <typename E>
-void Arbre<E>::enleveMot(string s);
+void Arbre<E>::enleverMot(string s);
+
 
 template <typename E>
-void Arbre<E>::afficherDict();
-
-template <typename E>
-bool Arbre<E>::chercheMot(string s);*/
+bool Arbre<E>::chercherMot(string s);*/
 
 // -------------------- NODE -----------------------
 

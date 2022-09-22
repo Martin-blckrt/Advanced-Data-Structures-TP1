@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 
-    string path = "C:\\Users\\Clement\\CLionProjects\\bataille\\Exercice 3\\Test_files\\alain.dico";
+    string path = "../Test_files/alain.dico";
     Arbre a;
 
     fstream inputFile(path);
@@ -19,6 +19,5 @@ int main() {
     }
     inputFile.close();
 
-    a.afficherDict();
-
+    cout << a << endl;
 }

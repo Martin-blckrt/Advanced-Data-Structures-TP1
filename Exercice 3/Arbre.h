@@ -64,14 +64,14 @@ public:
     //E successeur(const E& ) const;
     //E _successeur(Node*, const E&) const;
     void firstAjouterMot(std::string);
-    void ajouterMot(std::string, Node*);
+    void ajouterMot(std::string, Node*, Node*);
     void prepareBrutePlace(std::string, Node*, Node*);
     void brutePlaceWord(std::string, Node*);
-    void enleveMot(std::string);
-    void afficherDict();
-    void afficherArbre(const std::string, Node*, bool);
-    bool chercheMot(std::string);
+    void enleverMot(std::string);
+    void afficherArbre(const std::string, Node*, bool) const;
+    bool chercherMot(const std::string);
 
+    friend std::ostream& operator<<(std::ostream&, const Arbre&);
 };
 
 
