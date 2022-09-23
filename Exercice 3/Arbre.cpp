@@ -278,12 +278,35 @@ ostream &operator<<(ostream & output, const Arbre& a) {
 
 
 bool Arbre::chercherMot(const string s) {
-    if (s.size() == 0)
+    if (s.size() == 0) {
         return false;
+    }
+    else {
+        return _chercherMot(root, s, false);
+    }
+}
 
+bool Arbre::_chercherMot(Node* n, const string s, bool isEndOfWord) {
 
+    // Si mot vide, on a tout parcouru
+    if (s.size() == 0) {
+        return isEndOfWord; // Vrai si la fin du mot était enregistré
+    }
+
+    if (n == nullptr) { // Fin de l'arbre et le mot n'a pas été trouvé
+        return false;
+    }
+
+    if (n->data == s[0]) {  // Si data = premier caractère, on part à gauche
+        _chercherMot(n->left, s.substr(1), n->isEndOfWord);
+    }
+    else { // Sinon on cherche une alternative à droite
+        _chercherMot(n->right, s, n->isEndOfWord);
+    }
 
 }
+
+
 /*
 template <typename E>
 void Arbre<E>::enleverMot(string s);

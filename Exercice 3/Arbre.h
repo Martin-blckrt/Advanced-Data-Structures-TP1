@@ -18,6 +18,7 @@ private:
         char data;
         Node *left = nullptr;
         Node *right = nullptr;
+        bool isEndOfWord = false;
         //int card;
         // int height;
         Node(const char &d): data(d) {};
@@ -70,6 +71,8 @@ public:
     void enleverMot(std::string);
     void afficherArbre(const std::string, Node*, bool) const;
     bool chercherMot(const std::string);
+    bool _chercherMot(Node* , const std::string, bool);
+
 
     friend std::ostream& operator<<(std::ostream&, const Arbre&);
 };
