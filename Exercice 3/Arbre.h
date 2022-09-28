@@ -71,7 +71,7 @@ public:
     void enleverMot(std::string);
     void afficherArbre(const std::string, Node*, bool) const;
     bool chercherMot(const std::string);
-    bool _chercherMot(Node* , const std::string, bool);
+    bool _chercherMot(Node* , const std::string);
 
 
     friend std::ostream& operator<<(std::ostream&, const Arbre&);

@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
 
-    string path = "../Test_files/alain.dico";
+    string path = "../Test_files/test.dico";
     Arbre a;
 
     fstream inputFile(path);
@@ -20,4 +20,5 @@ int main() {
     inputFile.close();
 
     cout << a << endl;
+    cout << a.chercherMot("abas") << endl;
 }
