@@ -149,12 +149,11 @@ bool Arbre::chercherMot(const string s) {
 
 bool Arbre::_chercherMot(Node* n, string s) {
 
+    if (n == nullptr) // Fin de l'arbre
+        return false;
     // Si mot vide, on a tout parcouru
     if (n->data == s[0] && s.size() == 1)
         return n->isEndOfWord;
-
-    if (n == nullptr) // Fin de l'arbre et le mot n'a pas été trouvé
-        return false;
 
     if (n->data == s[0]) // Si data = premier caractère, on part à gauche
         return _chercherMot(n->left, s.erase(0,1));

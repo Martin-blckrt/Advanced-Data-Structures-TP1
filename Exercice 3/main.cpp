@@ -21,4 +21,5 @@ int main() {
 
     cout << a << endl;
     cout << a.chercherMot("abas") << endl;
+    cout << a.chercherMot("martin") << endl;
 }
