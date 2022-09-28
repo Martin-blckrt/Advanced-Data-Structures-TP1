@@ -71,7 +71,12 @@ public:
     void enleverMot(std::string);
     void afficherArbre(const std::string, Node*, bool) const;
     bool chercherMot(const std::string);
-    bool _chercherMot(Node* , const std::string);
+    bool _chercherMot(Node* , std::string);
+    bool chercherMots(Node* , std::string);
+    bool findUntilStar(Node* , std::string, std::vector<Node*>&);
+    void findAfterStar(Node*, std::vector<Node*>&, std::vector<Node*>&);
+    bool isNodeUnvisited(Node*, std::vector<Node*>&);
+    void printWord(std::vector<Node*>);
 
 
     friend std::ostream& operator<<(std::ostream&, const Arbre&);

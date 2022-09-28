@@ -43,8 +43,7 @@ void Arbre::enleverMot(string s) {
 
 void Arbre::ajouterMot(string s, Node* cur, Node* prev)
 {
-    //if (!chercherMot(s)) {
-    if (true) {
+    if (!chercherMot(s)) {
         Node* previous = prev;
         Node* current = cur;
 
@@ -82,6 +81,8 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
             }
         }
     }
+    else
+        cout << "Le mot " << s << " est deja dans le dictionnaire !" << endl;
 }
 
 void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
@@ -143,6 +144,8 @@ ostream &operator<<(ostream & output, const Arbre& a) {
 bool Arbre::chercherMot(const string s) {
     if (s.size() == 0)
         return false;
+    else if (s.find('*') != string::npos)
+        return chercherMots(root, s);
     else
         return _chercherMot(root, s);
 }
@@ -163,196 +166,101 @@ bool Arbre::_chercherMot(Node* n, string s) {
 
 }
 
+bool Arbre::chercherMots(Node* n, string s) {
 
-/*
-template <typename E>
-void Arbre<E>::enleverMot(string s);
+    vector<Node*> path;
+    vector<Node*> visited;
 
+    // si le mot est etoile, retourner tous les mots du dico
+    if (s.at(0) == '*') {
+        path.push_back(n);
+        findAfterStar(n, path, visited);
 
-template <typename E>
-bool Arbre<E>::chercherMot(string s);*/
-
-// -------------------- NODE -----------------------
-
-/*
-const char& Arbre<E>::max()const
-{
-    if (cpt==0)
-        throw std::logic_error("max: l'arbre est vide!\n");
-    if (root->right == 0)
-    {
-        return root->data;
+    // sinon recuperer ce qu'il y a avant l'etoile
+    // puis retourner tous les mots possibles apres l'etoile
+    } else {
+        if (findUntilStar(n, s, path)) {
+            findAfterStar(path.back()->left, path, visited);
+        } else
+            cout << "This word isn't in our dictionary !" << endl;
     }
-    Node * temp = root->right;
-    while (temp->right!=0)
-        temp = temp->right;
-    return temp->data;
+    return true;
 }
 
-template<typename E>
-const E& Arbre<E>::_max(Node* arb)const {
-    if (cpt == 0)
-        throw std::logic_error("max: l'arbre est vide!\n");
-    if (arb->right == 0) {
-        return arb->data;
+bool Arbre::findUntilStar(Node* n, string s, vector<Node*> &path) {
+
+    // tant qu'on est pas à l'étoile on remplit le path avec le mot
+    while (s.at(0) != '*') {
+        if (n == nullptr) // Fin de l'arbre
+            return false;
+        // Si mot vide, on a tout parcouru
+        if (n->data == s[0] && s.size() == 1)
+            return n->isEndOfWord;
+
+        // Si data = premier caractère, on part à gauche
+        if (n->data == s[0]) {
+            path.push_back(n);
+            return findUntilStar(n->left, s.erase(0,1), path);
+        }
+
+        else // Sinon on cherche une alternative à droite
+            return findUntilStar(n->right, s, path);
     }
-    Node *temp = arb->right;
-    while (temp->right != 0)
-        temp = temp->right;
+    return true;
 }
 
-template<typename E>
-const E& Arbre<E>::min()const
-{
-    if (cpt==0)
-        throw std::logic_error("max: l'arbre est vide!\n");
-    if (root->left == 0)
-    {
-        return root->data;
-    }
-    Node * temp = root->left;
-    while (temp->left!=0)
-        temp = temp->left;
-    return temp->data;
-}
+void Arbre::findAfterStar(Node* n, vector<Node*> &path, vector<Node*> &visited) {
 
-template<typename E>
-const E& Arbre<E>::_min(Node* arb)const {
-    if (cpt == 0)
-        throw std::logic_error("max: l'arbre est vide!\n");
-    if (arb->left == 0) {
-        return arb->data;
-    }
-    Node *temp = arb->left;
-    while (temp->left != 0)
-        temp = temp->left;
-}
+    // tant qu'on n'a pas exploré toutes les possibilités
+    if (!path.empty()) {
 
-template<typename E>
-int Arbre<E>:: nbNoeuds() const
-{
-    return _nbNoeuds(root);
-}
-template<typename E>
-int Arbre<E>:: _nbNoeuds(Node* arb) const
-{
-    if (arb==0)
-        return 0;
-    return _nbNoeuds(arb->left) + _nbNoeuds(arb->right) + 1;
-}
+        // si on est à la fin d'un mot qu'on n'a pas affiche, on l'affiche
+        if (n->isEndOfWord && isNodeUnvisited(n, visited)) {
+            path.push_back(n);
+            printWord(path);
+            path.pop_back();
+        }
 
-template<typename E>
-int Arbre<E>::nbFeuilles() const
-{
-    return _nbFeuilles(root);
-}
-template<typename E>
-int Arbre<E>::_nbFeuilles(Node*arb) const
-{
-    int nbG (0), nbD(0);
-    if (arb != 0)
-    {
-        if (arb->left == 0 && arb->right == 0)
-            return 1;
-        else
-        {
-            if (arb->left != 0)
-                nbG = _nbFeuilles(arb->left);
-            if (arb->right != 0)
-                nbD = _nbFeuilles(arb->right);
+        // si c'est la premiere fois qu'on passe par ici, on le marque
+        if (isNodeUnvisited(n, visited))
+            visited.push_back(n);
+
+        // si on ne peut plus aller à gauche, alors on passe à la droite
+        if (n->left != nullptr && isNodeUnvisited(n->left, visited)) {
+            path.push_back(n);
+            n = n->left;
+            findAfterStar(n, path, visited);
+
+        // si on ne peut plus aller a droite, alors on rebrousse chemin
+        } else if (n->right != nullptr && isNodeUnvisited(n->right, visited)) {
+            n = n->right;
+            findAfterStar(n,  path, visited);
+        } else {
+            n = path.back();
+            path.pop_back();
+            findAfterStar(n,  path, visited);
         }
     }
-    return nbG + nbD;
 }
 
-template<typename E>
-int Arbre<E>::hauteur() const
-{
-    if (cpt==0)
-        throw std::logic_error("hauteur: l'arbre est vide!\n");
-    return _hauteurParcours(root);
+bool Arbre::isNodeUnvisited(Node* node, vector<Node*> &visited) {
+
+    //renvoie faux si node est dans le vector visited
+    for (auto elem: visited)
+        if (elem == node)
+            return false;
+
+    return true;
 }
 
-template<typename E>
-int Arbre<E>::_hauteurParcours(Node * arb) const
-{
-    if (arb==0)
-        return -1;
-    return 1 + _maximum(_hauteurParcours(arb->left), _hauteurParcours(arb->right));
-}
-
-template<typename E>
-bool Arbre<E>:: appartient(const E &data) const
-{
-    return _auxAppartient(root, data)!=0;
-}
-template<typename E>
-typename Arbre<E>:: Node* Arbre<E>:: _auxAppartient(Node*
-arbre, const E &data) const
-{
-    if (arbre == 0)
-        return 0;
-    if ( arbre->data == data )
-        return arbre;
-    if ( arbre->data > data )
-        return _auxAppartient(arbre->left, data);
-    else
-        return _auxAppartient(arbre->right, data);
-}
-
-template <typename E>
-const E& Arbre<E>:: parent(const E& el) const
-{
-    Node* noeudDeEl = _auxAppartient(root, el);
-    Node* parentDeEl = _parent(root, noeudDeEl);
-    return parentDeEl->data;
-}
-
-template <typename E>
-typename Arbre<E>:: Node* Arbre<E>:: _parent(Node* arb, Node* sArb) const
-{
-    if (arb == 0)
-        throw std::logic_error("parent: l'arbre est vide!\n");
-    if (sArb == 0)
-        throw std::logic_error("parent: l'element n'existe pas!\n");
-    if (sArb == arb)
-        throw std::logic_error("parent: Le parent de la racine d'existe pas!\n");
-    if ( sArb->data < arb-> data )
-    {
-        if (arb->left == sArb) return arb;
-        else return _parent(arb->left, sArb);
+void Arbre::printWord(vector<Node*> path) {
+    string word;
+    for (auto node : path) {
+        word.push_back(node->data);
     }
-    else
-    {
-        if (arb->right == sArb) return arb;
-        else return _parent(arb->right, sArb);
-    }
-}
 
-template <typename E>
-E Arbre<E>:: successeur(const E& info) const
-{
-    return _successeur(root, info);
+    // dans le cas ou le mot etait etoile, il faut enlever la racine de l'arbre
+    if (word.at(0) == '-')
+        word.erase(0,1);
+    cout << word << endl;
 }
-
-template <typename E>
-E Arbre<E>:: _successeur(Node* arb, const E& info) const
-{
-    if (cpt == 0)
-        throw std::logic_error("successeur: l'arbre est vide!\n");
-    Node* sArb = _auxAppartient(root, info);
-    if (sArb == 0)
-        throw std::logic_error("successeur: l'element n'existe pas!\n");
-    if ( info == _max(arb))
-        throw std::logic_error("successeur: l'element est le max dans l'arbre!\n");
-    if (sArb->right != 0)
-        return _min(sArb->right);
-    else
-    {
-        Node * pere = _parent(arb, sArb);
-        while (pere->data < sArb->data ) pere = _parent(arb,pere);
-        return pere->data;
-    }
-}
-*/
-//Getter
