@@ -218,23 +218,27 @@ void Arbre::firstAjouterMot(string s)
 
 void Arbre::ajouterMot(string s, Node* cur, Node* prev)
 {
-    // if word is not in dico
+    if (!chercherMot(s)) {
+        Node* previous = prev;
+        Node* current = cur;
 
-    Node* previous = prev;
-    Node* current = cur;
+        char letter = s.at(0);
 
-    char letter = s.at(0);
+        while (current != nullptr && current->data < letter) {
+            previous = current;
+            current = current->right;
+        }
 
-    while (current != nullptr && current->data < letter) {
-        previous = current;
-        current = current->right;
-    }
-
-    if (current == nullptr || current->data > letter) {
-        prepareBrutePlace(s, current, previous);
-    } else if (current->data == letter) {
-        current = current->left;
-        ajouterMot(s.erase(0,1), current, previous);
+        if (current == nullptr || current->data > letter) {
+            prepareBrutePlace(s, current, previous);
+        } else if (current->data == letter) {
+            if (s.size() == 1)
+                // end of word here
+            else {
+                current = current->left;
+                ajouterMot(s.erase(0,1), current, previous);
+            }
+        }
     }
 }
 

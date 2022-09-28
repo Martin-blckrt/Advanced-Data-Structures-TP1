@@ -13,7 +13,7 @@ int main() {
     fstream inputFile(path);
     string word;
 
-    while (getline(inputFile, word) && word != "de") {
+    while (getline(inputFile, word)) {
         cout << word << endl;
         a.firstAjouterMot(word);
     }
