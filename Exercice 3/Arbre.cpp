@@ -23,6 +23,10 @@ Arbre :: ~Arbre() {
 
 }
 
+int Arbre::getCompteur() const{
+    return cpt;
+}
+
 bool Arbre::estVide() const {
     return root == 0;
 }
@@ -31,13 +35,125 @@ bool Arbre::estVide() const {
 void Arbre::firstAjouterMot(string s)
 {
     ajouterMot(s, root, nullptr);
+
 }
 
 void Arbre::enleverMot(string s) {
-    if (chercherMot(s)) {  // On vérifie que le mot existe bien dans l'arbre
+    if (chercherMot(s)) {
+        if (cpt > 1) {
+            _enleverMot(root->right, s);
+        }
+        else {
+            Node* currNode = root->right;
+            Node* tempNode;
 
-    } else {
+            while (currNode->left != nullptr) {
+                tempNode = currNode->left;
+                currNode->left = nullptr;
+                currNode = tempNode;
+            }
+        }
+
+        cout << s << " a ete supprime du dictionnaire." << endl;
+        cpt -= 1;
+    }
+    else
         cout << "Ce mot n'existe pas" << endl;
+}
+
+void Arbre::_enleverMot(Node* start, string s) {
+
+    Node* currentNode = start;
+    Node* previousNode;
+    Node* nextNode;
+
+    int indLastRightChild = -1; // Indice dans le parcours de l'abrbre indiquant le dernier noeud avec un right child
+    int indLastEndOfWord = -1;  // Indice dans le parcours de l'abrbre indiquant le dernier noeud indiquant la fin d'un mot
+    int compteur = 0;
+
+    // Premier parcours pour récupérer le dernier noeud non supprimable
+    for (int i = 0; i < s.size(); i++) {
+
+        while (currentNode->data != s[i]) {
+            currentNode = currentNode->right;
+            compteur += 1;
+        }
+
+        if (currentNode->isEndOfWord) {
+            if (i != s.size()-1) {
+                indLastEndOfWord = compteur;
+            }
+            else {
+                if (currentNode->left)
+                    indLastEndOfWord = compteur;
+            }
+        }
+
+        if (currentNode->right)
+            indLastRightChild = compteur;
+
+        compteur += 1;
+        currentNode = currentNode->left;
+    }
+
+    currentNode = start;
+    // On récupère l'indice du dernier noeud non supprimable
+    int stop = max(indLastRightChild, indLastEndOfWord);
+    compteur = 0;
+
+    for (char i : s) {
+        while (start->data != i) {
+            if (compteur != stop) {
+                previousNode = start;
+                start = start->right;
+                compteur += 1;
+            }
+            else {
+                break;
+            }
+        }
+
+        if (compteur == stop) {
+
+            if (stop == indLastRightChild) {
+                if (start->right->data != i) {
+                    if (compteur == 0) {
+                        root->right = start->right;
+                    }
+                    else {
+                        if (previousNode->left == start) {
+                            previousNode->left = start->right;
+                        }
+                        else {
+                            previousNode->right = start->right;
+                        }
+                    }
+
+                }
+                else {
+                    previousNode = start;
+                    start = start->right;
+                    previousNode->right = nullptr;
+                }
+            }
+            else {
+                if (i == s.back()) {
+                    start->isEndOfWord = false;
+                    break;
+                }
+            }
+
+
+            while (start->left != nullptr) {
+                nextNode = start->left;
+                start->left = nullptr;
+                start = nextNode;
+            }
+            break;
+        }
+        previousNode = start;
+        start = start->left;
+        compteur += 1;
     }
 }
 
@@ -67,9 +183,10 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
         } else if (current->data == letter) {
 
             // si la taille du mot vaut 1 et qu'on est sur la bonne lettre, alors on a fini le mot
-            if (s.size() == 1)
+            if (s.size() == 1) {
                 current->isEndOfWord = true;
-
+                cpt += 1;
+            }
                 // si le mot continue après, on "descend" d'un étage pour poursuivre l'ajout à l'étage d'en dessous sans la première lettre
             else {
 
@@ -102,9 +219,10 @@ void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
         prev->right = newNode;
 
     // si il ne reste plus qu'une lettre dans le mot, alors le nouveau noeud est le dernier et le mot est fini
-    if (s.size() == 1)
+    if (s.size() == 1) {
         newNode->isEndOfWord = true;
-
+        cpt += 1;
+    }
         // sinon, on n'a plus qu'à placer le mot "tout droit"
     else
         brutePlaceWord(s.erase(0,1), newNode);
@@ -119,6 +237,7 @@ void Arbre :: brutePlaceWord(string s, Node* cur) {
         cur = newNode;
     }
     cur->isEndOfWord = true;
+    cpt += 1;
 }
 
 void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) const{
