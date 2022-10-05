@@ -52,6 +52,7 @@ void Arbre::enleverMot(string s) {
                 currNode->left = nullptr;
                 currNode = tempNode;
             }
+            root->right = nullptr;
         }
 
         cout << s << " a ete supprime du dictionnaire." << endl;
@@ -94,7 +95,16 @@ void Arbre::_enleverMot(Node* start, string s) {
 
         compteur += 1;
         currentNode = currentNode->left;
+
+        if (currentNode) {
+            if (currentNode->right)
+                indLastRightChild = compteur;
+        }
+
     }
+
+    if (indLastRightChild == -1 && indLastEndOfWord == -1)
+        indLastRightChild = 0;
 
     currentNode = start;
     // On récupère l'indice du dernier noeud non supprimable

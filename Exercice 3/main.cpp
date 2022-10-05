@@ -24,17 +24,20 @@ int main() {
     cout << a << endl;
     //cout << a.chercherMot("abas") << endl;
     //cout << a.chercherMot("martin") << endl;
-    a.enleverMot("abas");
+    a.enleverMot("abs");
     a.enleverMot("las");
+    cout << a << endl;
     a.enleverMot("lasse");
+    cout << a << endl;
     a.enleverMot("bas");
+    cout << a << endl;
     a.enleverMot("arbre");
+    cout << a << endl;
     a.enleverMot("arbuste");
-    cout << a.getCompteur() << endl;
+    cout << a << endl;
     a.enleverMot("lit");
     cout << a << endl;
-    cout << a.getCompteur() << endl;
-    a.firstAjouterMot("lit");
-    cout << a.getCompteur() << endl;
+    a.enleverMot("abas");
     cout << a << endl;
+
 }
