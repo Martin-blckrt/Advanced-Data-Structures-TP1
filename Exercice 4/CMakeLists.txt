@@ -3,4 +3,4 @@ project(Exercice_4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Exercice_4 main.cpp Arbre.cpp Arbre.h Node.cpp Node.h)
+add_executable(Exercice_4 main.cpp Arbre.cpp Arbre.h Node.cpp Node.h utils.cpp utils.h)

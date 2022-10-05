@@ -1,38 +1,66 @@
 //
-// Created by Clement on 19/09/2022.
+// Created by Clement on 05/10/2022.
 //
-
 #include "Arbre.h"
-#include <iostream>
 
 using namespace std;
 
 // Constructeur
 Arbre :: Arbre() {
     root = new Node();
-    gen = 0;
+    taille = 0;
 }
 
 // Destructeur
-Arbre :: ~Arbre() {
-
-}
+Arbre :: ~Arbre() = default;
 
 bool Arbre::estVide() const {
     return root == nullptr;
 }
 
 int Arbre::getTreeSize() const {
-    //return treeSize;
+    return taille;
 }
 
+Node* Arbre::getRoot() const {
+    return root;
+}
+
+void Arbre::updateTaille() {
+    taille += 1;
+}
+
+void Arbre::firstNode(const member& m) {
+    root->setFirstName(m.firstName);
+    root->setLastName(m.lastName);
+    root->setBirthYear(m.birthYear);
+    root->setEyeColor(m.eyeColor);
+}
+
+void Arbre::addNode(const member& m, Node* curr_node) {
+    if (curr_node) { // On evite les segmentation fault
+
+        if (curr_node->getFirstName() + curr_node->getLastName() == m.parent) { // Si on est au bon parent
+            Node* new_node = new Node(m.firstName, m.lastName, m.birthYear, m.eyeColor);
+
+            if (m.type == "spouse")
+                curr_node->setSpouse(new_node);
+            if (m.type == "sibling")
+                curr_node->setSibling(new_node);
+            if (m.type == "firstchild")
+                curr_node->setFirstChild(new_node);
+        }
+        else { // appels récursifs sur les enfants
+            addNode(m, curr_node->getSpouse());
+            addNode(m, curr_node->getSibling());
+            addNode(m, curr_node->getFirstChild());
+        }
+    }
+}
+/*
 void Arbre::listDescendance(string name, string firstName) {
     // get Node of mister name Firstname
     // itere in tree doing parcours in/pre/post order
-}
-
-void Arbre::addFamilyMember(string name, string firstName, string bDate, string eye, string parentName, string parentFirstName) {
-    // build newNode
 }
 
 void Arbre::listSameEyedPeople(string iColor) {
@@ -49,4 +77,4 @@ int Arbre::getAvgAge() {
 
 Node* Arbre::getNode(string name, string firstName) {
     // parcours arbre until name = name
-}
+}*/

@@ -12,52 +12,52 @@ string Node::getFirstName() {
     return firstName;
 }
 
-string Node::getName() {
-    return name;
+string Node::getLastName() {
+    return lastName;
 }
 
-string Node::getBirthDate() {
-    return birthDate;
+string Node::getBirthYear() {
+    return birthYear;
 }
 
 string Node::getEyeColor() {
     return eyeColor;
 }
 
-Node* Node::getFirstChild(Node * node) {
-    return node->firstChild;
+Node* Node::getFirstChild() {
+    return firstChild;
 }
 
-Node* Node::getSibling(Node * node) {
-    return node->sibling;
+Node* Node::getSibling() {
+    return sibling;
 }
 
-Node* Node::getSpouse(Node * node) {
-    return node->spouse;
+Node* Node::getSpouse() {
+    return spouse;
 }
 
 void Node::setFirstName(string _fname) {
     firstName = std::move(_fname);
 }
 
-void Node::setName(string _name) {
-    name = std::move(_name);
+void Node::setLastName(string _name) {
+    lastName = std::move(_name);
 }
 
-void Node::setBirthDate(string _bdate) {
-    birthDate = std::move(_bdate);
+void Node::setBirthYear(string _byear) {
+    birthYear = std::move(_byear);
 }
 
 void Node::setEyeColor(string _iColor) {
     eyeColor = std::move(_iColor);
 }
 
-void Node::setFirstChild(Node* curr, Node* child) {
-    curr->firstChild = child;
+void Node::setFirstChild(Node* node) {
+    firstChild = node;
 }
-void Node::setSibling(Node* curr, Node* sib) {
-    curr->sibling = sib;
+void Node::setSibling(Node* node) {
+    sibling = node;
 }
-void Node::setSpouse(Node* curr, Node* spou) {
-    curr->spouse = spou;
+void Node::setSpouse(Node* node) {
+    spouse = node;
 }
