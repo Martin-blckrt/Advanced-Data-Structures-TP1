@@ -182,7 +182,6 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
             previous = current;
             current = current->right;
         }
-
         // si on est arrivé tout à droite de l'arbre (current == nullptr)
         // ou si on est juste à droite de la lettre précédente
         // alors on n'a pas à réutiliser une structure existante et on peut juste placer notre mot "tout droit"
@@ -200,9 +199,12 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
                 // si le mot continue après, on "descend" d'un étage pour poursuivre l'ajout à l'étage d'en dessous sans la première lettre
             else {
 
-                // si on se situe actuellement sur la fin d'un mot, alors précédent prend la valeur de cette lettre avant de "descendre"
-                if (current->isEndOfWord)
-                    previous = current;
+                // si on se situe actuellement sur la fin d'un mot
+                // ou que previous est à gauche (cad une alternative précédente à la bonne lettre)
+                // alors précédent prend la valeur de cette lettre avant de "descendre"
+                //if (current->isEndOfWord || previous->right == current || previous->left == current)
+                previous = current;
+
                 current = current->left;
                 ajouterMot(s.erase(0,1), current, previous);
             }
@@ -217,16 +219,24 @@ void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
 
     // si on n'est pas sur un pointeur nul, alors il faut assurer la continuité du noeud avant de s'insérer
     if (cur != nullptr) {
-        newNode->right = prev->right;
+        if (newNode->data < cur->data)
+            newNode->right = prev->left;
+        else
+            newNode->right = prev->right;
     }
 
-    // si on est sur un pointeur nul et que l'on est juste "en dessous" de précédent, alors on est en train d'ajouter une fin à un mot existant (sauf si prev est la racine)
-    if (cur == nullptr && prev->left == cur && prev != root)
-        prev->left = newNode;
-
-        // sinon on est en train d'ajouter une "alternative" à la lettre précédente
-    else
+    if (prev == root)
         prev->right = newNode;
+    else {
+        // si on est sur un pointeur nul et que l'on est juste "en dessous" de précédent, alors on est en train d'ajouter une fin à un mot existant
+        if (cur == nullptr && prev->left == cur)
+            prev->left = newNode;
+            // sinon on est en train d'ajouter une "alternative" à la lettre précédente
+        else if (prev->left == cur)
+            prev->left = newNode;
+        else
+            prev->right = newNode;
+    }
 
     // si il ne reste plus qu'une lettre dans le mot, alors le nouveau noeud est le dernier et le mot est fini
     if (s.size() == 1) {

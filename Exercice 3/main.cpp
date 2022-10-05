@@ -18,13 +18,15 @@ int main() {
         a.firstAjouterMot(word);
     }
     inputFile.close();
-
+    a.firstAjouterMot("arborescence");
     cout << a.getCompteur() << endl;
 
     cout << a << endl;
     //cout << a.chercherMot("abas") << endl;
     //cout << a.chercherMot("martin") << endl;
-    a.enleverMot("abs");
+
+    cout << a.chercherMot("arborescence") << endl;
+    a.enleverMot("abas");
     a.enleverMot("las");
     cout << a << endl;
     a.enleverMot("lasse");
@@ -33,9 +35,14 @@ int main() {
     cout << a << endl;
     a.enleverMot("arbre");
     cout << a << endl;
+    a.firstAjouterMot("arborescence");
+    cout << a.chercherMot("arborescence") << endl;
+    cout << a << endl;
     a.enleverMot("arbuste");
     cout << a << endl;
-    a.enleverMot("lit");
+    a.firstAjouterMot("liton");
+    cout << a << endl;
+    a.firstAjouterMot("literie");
     cout << a << endl;
     a.enleverMot("abas");
     cout << a << endl;
