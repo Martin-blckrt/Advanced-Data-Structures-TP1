@@ -19,7 +19,7 @@ Arbre :: ~Arbre() {
 }
 
 bool Arbre::estVide() const {
-    return root == 0;
+    return root == nullptr;
 }
 
 int Arbre::getTreeSize() const {
