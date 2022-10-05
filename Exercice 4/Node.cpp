@@ -4,6 +4,7 @@
 
 #include "Node.h"
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -23,34 +24,40 @@ string Node::getEyeColor() {
     return eyeColor;
 }
 
-Node* Node::getParent1(Node* node) {
-    return node->parent1;
+Node* Node::getFirstChild(Node * node) {
+    return node->firstChild;
 }
 
-Node* Node::getParent2(Node* node) {
-    return node->parent2;
+Node* Node::getSibling(Node * node) {
+    return node->sibling;
+}
+
+Node* Node::getSpouse(Node * node) {
+    return node->spouse;
 }
 
 void Node::setFirstName(string _fname) {
-    firstName = _fname;
+    firstName = std::move(_fname);
 }
 
 void Node::setName(string _name) {
-    name = _name;
+    name = std::move(_name);
 }
 
 void Node::setBirthDate(string _bdate) {
-    birthDate = _bdate;
+    birthDate = std::move(_bdate);
 }
 
 void Node::setEyeColor(string _iColor) {
-    eyeColor = _iColor;
+    eyeColor = std::move(_iColor);
 }
 
-void Node::setParent1(Node * childNode, Node * parentNode) {
-    childNode->parent1 = parentNode;
+void Node::setFirstChild(Node* curr, Node* child) {
+    curr->firstChild = child;
 }
-
-void Node::setParent2(Node * childNode, Node * parentNode) {
-    childNode->parent2 = parentNode;
+void Node::setSibling(Node* curr, Node* sib) {
+    curr->sibling = sib;
+}
+void Node::setSpouse(Node* curr, Node* spou) {
+    curr->spouse = spou;
 }

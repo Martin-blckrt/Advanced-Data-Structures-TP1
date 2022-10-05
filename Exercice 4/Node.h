@@ -5,7 +5,8 @@
 #ifndef EXERCICE_4_NODE_H
 #define EXERCICE_4_NODE_H
 
-#include <string>;
+#include <string>
+
 
 class Node {
 public:
@@ -13,15 +14,17 @@ public:
     std::string getName();
     std::string getBirthDate();
     std::string getEyeColor();
-    Node* getParent1(Node*);
-    Node* getParent2(Node*);
+    static Node* getFirstChild(Node*);
+    static Node* getSibling(Node*);
+    static Node* getSpouse(Node*);
 
     void setFirstName(std::string);
     void setName(std::string);
     void setBirthDate(std::string);
     void setEyeColor(std::string);
-    void setParent1(Node*, Node*);
-    void setParent2(Node*, Node*);
+    static void setFirstChild(Node*, Node*);
+    static void setSibling(Node*, Node*);
+    static void setSpouse(Node*, Node*);
 
 private:
     std::string name;
@@ -29,7 +32,7 @@ private:
     std::string birthDate;
     std::string eyeColor;
     //list of children but what struct Node *left = nullptr;
-    Node *parent1, *parent2 = nullptr;
+    Node *firstChild, *sibling, *spouse = nullptr;
 };
 
 
