@@ -3,6 +3,7 @@
 #include "Node.h"
 #include <vector>
 #include "utils.h"
+#include <iostream>
 
 using namespace std;
 
@@ -17,5 +18,6 @@ int main() {
         a.updateTaille();
     }
 
+    cout << "Age moyen dans l'arbre " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << endl;
     return 0;
 }

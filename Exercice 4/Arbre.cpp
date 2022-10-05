@@ -57,6 +57,19 @@ void Arbre::addNode(const member& m, Node* curr_node) {
         }
     }
 }
+
+int Arbre::getAvgAge(int somme) const {
+    return somme / taille;
+}
+
+int Arbre::getSumAge(int currentYear, Node* curr_node) {
+    if (curr_node == nullptr)
+        return 0;
+    return (currentYear - stoi(curr_node->getBirthYear()) + getSumAge(currentYear, curr_node->getFirstChild()) +
+            getSumAge(currentYear, curr_node->getSibling()) + getSumAge(currentYear, curr_node->getSpouse()));
+}
+
+
 /*
 void Arbre::listDescendance(string name, string firstName) {
     // get Node of mister name Firstname
@@ -71,9 +84,7 @@ void Arbre::listSameEyedAncestors(string iColor) {
     // same mais parcours inversé
 }
 
-int Arbre::getAvgAge() {
-    // parcours whole arbre log people ages
-}
+
 
 Node* Arbre::getNode(string name, string firstName) {
     // parcours arbre until name = name

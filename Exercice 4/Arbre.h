@@ -32,11 +32,13 @@ public:
     void updateTaille();
     void firstNode(const member&);
     static void addNode(const member&, Node*);
+    int getAvgAge(int) const;
+    int getSumAge(int, Node*);
 
     //void listDescendance(std::string, std::string); // in order, pre-order, post-order
     //void listSameEyedPeople(std::string);
     //void listSameEyedAncestors(std::string);
-    //int getAvgAge();
+
     //Node* getNode(std::string, std::string);
 
     //friend std::ostream& operator<<(std::ostream&, const Arbre&);
