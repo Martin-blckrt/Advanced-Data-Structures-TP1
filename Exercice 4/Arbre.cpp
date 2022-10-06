@@ -2,6 +2,7 @@
 // Created by Clement on 05/10/2022.
 //
 #include "Arbre.h"
+#include <iostream>
 
 using namespace std;
 
@@ -67,6 +68,19 @@ int Arbre::getSumAge(int currentYear, Node* curr_node) {
         return 0;
     return (currentYear - stoi(curr_node->getBirthYear()) + getSumAge(currentYear, curr_node->getFirstChild()) +
             getSumAge(currentYear, curr_node->getSibling()) + getSumAge(currentYear, curr_node->getSpouse()));
+}
+
+void Arbre::getPeopleWithEyeColor(string eyeColor, Node* curr_node) {
+    if (curr_node != nullptr)
+        cout << "";
+    if (curr_node->getEyeColor() == eyeColor)
+        cout << curr_node->getFirstName() << " " << curr_node->getLastName() << endl;
+    if (curr_node->getSpouse() != nullptr)
+        getPeopleWithEyeColor(eyeColor, curr_node->getSpouse());
+    if (curr_node->getSibling() != nullptr)
+        getPeopleWithEyeColor(eyeColor, curr_node->getSibling());
+    if (curr_node->getFirstChild() != nullptr)
+        getPeopleWithEyeColor(eyeColor, curr_node->getFirstChild());
 }
 
 

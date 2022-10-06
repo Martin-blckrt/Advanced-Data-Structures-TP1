@@ -18,6 +18,9 @@ int main() {
         a.updateTaille();
     }
 
-    cout << "Age moyen dans l'arbre " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << endl;
+    cout << "Age moyen dans l'arbre : " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << endl;
+    cout << "Personnes ayant des yeux gris :" << endl;
+    a.getPeopleWithEyeColor("grey", a.getRoot());
+
     return 0;
 }

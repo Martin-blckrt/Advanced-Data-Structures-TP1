@@ -34,8 +34,10 @@ public:
     static void addNode(const member&, Node*);
     int getAvgAge(int) const;
     int getSumAge(int, Node*);
+    void getPeopleWithEyeColor(std::string, Node*);
 
-    //void listDescendance(std::string, std::string); // in order, pre-order, post-order
+
+        //void listDescendance(std::string, std::string); // in order, pre-order, post-order
     //void listSameEyedPeople(std::string);
     //void listSameEyedAncestors(std::string);
 
