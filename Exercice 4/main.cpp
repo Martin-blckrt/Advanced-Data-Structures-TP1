@@ -18,12 +18,27 @@ int main() {
         a.updateTaille();
     }
 
-    cout << "Age moyen dans l'arbre : " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << endl;
+    cout << "Arbre vide ? : ";
+    a.estVide() ? cout << "Oui\n" : cout << "Non\n";
+
+    cout << "Taille de l'arbre " << a.getTreeSize() << endl;
+
+    cout << "Age moyen dans l'arbre : " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << "\n \n" << endl;
+
     cout << "Personnes ayant des yeux gris :" << endl;
     a.getSameEyedPeople("grey", a.getRoot());
 
-    cout << "Ancetres d'Ava Louri ayant les memes yeux qu'elle :" << endl;
+    cout << "\n\nAncetres d'Ava Louri ayant les memes yeux qu'elle :" << endl;
     a.getSameEyedAncestors("brown", "avalouri", a.getRoot());
+
+    cout << "\n\nDescendance de Lucas Delteil Prefixe: " << endl;
+    a.getLineageOfPersonPreOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
+
+    cout << "\n\nDescendance de Lucas Delteil Infixe: " << endl;
+    a.getLineageOfPersonInOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
+
+    cout << "\n\nDescendance de Lucas Delteil Postfixe: " << endl;
+    a.getLineageOfPersonPostOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
 
     return 0;
 }

@@ -71,8 +71,6 @@ int Arbre::getSumAge(int currentYear, Node* curr_node) {
 }
 
 void Arbre::getSameEyedPeople(const string& eyeColor, Node* curr_node) {
-    if (curr_node != nullptr)
-        cout << "";
     if (curr_node->getEyeColor() == eyeColor)
         cout << curr_node->getFirstName() << " " << curr_node->getLastName() << endl;
     if (curr_node->getSpouse() != nullptr)
@@ -95,22 +93,55 @@ void Arbre::getSameEyedAncestors(const string& eyeColor, const string& username,
     if (curr_node->getFirstChild() != nullptr)
         getSameEyedPeople(eyeColor, curr_node->getFirstChild());
 }
-/*
-void Arbre::listDescendance(string name, string firstName) {
-    // get Node of mister name Firstname
-    // itere in tree doing parcours in/pre/post order
+
+Node* Arbre::getPersonNode(const string& username, Node* curr_node) {
+    if (curr_node->getFirstName() + curr_node->getLastName() == username)
+        return curr_node;
+    if (curr_node->getSpouse() != nullptr)
+        getPersonNode(username, curr_node->getSpouse());
+    if (curr_node->getSibling() != nullptr)
+        getPersonNode(username, curr_node->getSibling());
+    if (curr_node->getFirstChild() != nullptr)
+        getPersonNode(username, curr_node->getFirstChild());
+    return nullptr;
 }
 
-void Arbre::listSameEyedPeople(string iColor) {
-    // parcours tree return eye == this color
+void Arbre::getLineageOfPersonPreOrder(const Node* person_node, Node* curr_node) {
+    // Prefixe : racine, puis gauche, puis droite AKA person -> spouse -> first child -> siblings)
+    cout << curr_node->getFirstName() + " " + curr_node->getLastName() << endl;
+
+    if (curr_node->getSpouse() != nullptr)
+        getLineageOfPersonPreOrder(person_node, curr_node->getSpouse());
+    if (curr_node->getFirstChild() != nullptr)
+        getLineageOfPersonPreOrder(person_node, curr_node->getFirstChild());
+    if (curr_node->getSibling() != nullptr)
+        getLineageOfPersonPreOrder(person_node, curr_node->getSibling());
 }
 
-void Arbre::listSameEyedAncestors(string iColor) {
-    // same mais parcours inversé
+void Arbre::getLineageOfPersonInOrder(const Node* person_node, Node* curr_node) {
+    // son sous-arbre gauche, puis sa racine, puis son sous-arbre droit
+
+    if (curr_node->getSpouse() != nullptr)
+        getLineageOfPersonInOrder(person_node, curr_node->getSpouse());
+
+    cout << curr_node->getFirstName() + " " + curr_node->getLastName() << endl;
+
+    if (curr_node->getSibling() != nullptr)
+        getLineageOfPersonInOrder(person_node, curr_node->getSibling());
+    if (curr_node->getFirstChild() != nullptr)
+        getLineageOfPersonInOrder(person_node, curr_node->getFirstChild());
 }
 
+void Arbre::getLineageOfPersonPostOrder(const Node* person_node, Node* curr_node) {
+    // son sous-arbre gauche, puis son sous-arbre droit, puis sa racine.
 
+    if (curr_node->getSpouse() != nullptr)
+        getLineageOfPersonPostOrder(person_node, curr_node->getSpouse());
+    if (curr_node->getSibling() != nullptr)
+        getLineageOfPersonPostOrder(person_node, curr_node->getSibling());
+    if (curr_node->getFirstChild() != nullptr)
+        getLineageOfPersonPostOrder(person_node, curr_node->getFirstChild());
 
-Node* Arbre::getNode(string name, string firstName) {
-    // parcours arbre until name = name
-}*/
+    cout << curr_node->getFirstName() + " " + curr_node->getLastName() << endl;
+}
+

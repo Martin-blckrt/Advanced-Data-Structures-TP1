@@ -36,15 +36,10 @@ public:
     int getSumAge(int, Node*);
     void getSameEyedPeople(const std::string&, Node*);
     void getSameEyedAncestors(const std::string&, const std::string&, Node*);
-
-
-
-        //void listDescendance(std::string, std::string); // in order, pre-order, post-order
-    //void listSameEyedPeople(std::string);
-    //void listSameEyedAncestors(std::string);
-
-    //Node* getNode(std::string, std::string);
-
+    void getLineageOfPersonInOrder(const Node*, Node*);
+    void getLineageOfPersonPreOrder(const Node*, Node*);
+    void getLineageOfPersonPostOrder(const Node*, Node*);
+    Node* getPersonNode(const std::string&, Node*);
     //friend std::ostream& operator<<(std::ostream&, const Arbre&);
 };
 
