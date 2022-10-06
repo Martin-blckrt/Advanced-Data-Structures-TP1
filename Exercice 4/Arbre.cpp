@@ -70,20 +70,31 @@ int Arbre::getSumAge(int currentYear, Node* curr_node) {
             getSumAge(currentYear, curr_node->getSibling()) + getSumAge(currentYear, curr_node->getSpouse()));
 }
 
-void Arbre::getPeopleWithEyeColor(string eyeColor, Node* curr_node) {
+void Arbre::getSameEyedPeople(const string& eyeColor, Node* curr_node) {
     if (curr_node != nullptr)
         cout << "";
     if (curr_node->getEyeColor() == eyeColor)
         cout << curr_node->getFirstName() << " " << curr_node->getLastName() << endl;
     if (curr_node->getSpouse() != nullptr)
-        getPeopleWithEyeColor(eyeColor, curr_node->getSpouse());
+        getSameEyedPeople(eyeColor, curr_node->getSpouse());
     if (curr_node->getSibling() != nullptr)
-        getPeopleWithEyeColor(eyeColor, curr_node->getSibling());
+        getSameEyedPeople(eyeColor, curr_node->getSibling());
     if (curr_node->getFirstChild() != nullptr)
-        getPeopleWithEyeColor(eyeColor, curr_node->getFirstChild());
+        getSameEyedPeople(eyeColor, curr_node->getFirstChild());
 }
 
-
+void Arbre::getSameEyedAncestors(const string& eyeColor, const string& username, Node* curr_node) {
+    if (curr_node->getEyeColor() == eyeColor)
+        cout << curr_node->getFirstName() << " " << curr_node->getLastName() << endl;
+    if (curr_node->getFirstName() + curr_node->getLastName() == username)
+        return;
+    if (curr_node->getSpouse() != nullptr)
+        getSameEyedPeople(eyeColor, curr_node->getSpouse());
+    if (curr_node->getSibling() != nullptr)
+        getSameEyedPeople(eyeColor, curr_node->getSibling());
+    if (curr_node->getFirstChild() != nullptr)
+        getSameEyedPeople(eyeColor, curr_node->getFirstChild());
+}
 /*
 void Arbre::listDescendance(string name, string firstName) {
     // get Node of mister name Firstname

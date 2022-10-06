@@ -20,7 +20,10 @@ int main() {
 
     cout << "Age moyen dans l'arbre : " << a.getAvgAge(a.getSumAge(2022, a.getRoot())) << endl;
     cout << "Personnes ayant des yeux gris :" << endl;
-    a.getPeopleWithEyeColor("grey", a.getRoot());
+    a.getSameEyedPeople("grey", a.getRoot());
+
+    cout << "Ancetres d'Ava Louri ayant les memes yeux qu'elle :" << endl;
+    a.getSameEyedAncestors("brown", "avalouri", a.getRoot());
 
     return 0;
 }

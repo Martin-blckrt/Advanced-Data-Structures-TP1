@@ -9,7 +9,7 @@
 using namespace std;
 
 vector<member> getMembersFromFile(const string& path) {
-    vector<member> to_return;
+    vector<member> membersList;
     fstream inputFile(path);
     string outputLine, temp;
 
@@ -48,8 +48,8 @@ vector<member> getMembersFromFile(const string& path) {
                     break;
             }
         }
-        to_return.push_back(m);
+        membersList.push_back(m);
     }
     inputFile.close();
-    return to_return;
+    return membersList;
 }
