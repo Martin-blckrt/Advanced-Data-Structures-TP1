@@ -28,7 +28,7 @@ int Arbre::getCompteur() const{
 }
 
 bool Arbre::estVide() const {
-    return root == 0;
+    return root == nullptr;
 }
 
 // Exercice
@@ -315,8 +315,8 @@ bool Arbre::chercherMots(Node* n, string s) {
         path.push_back(n);
         findAfterStar(n, path, visited);
 
-    // sinon recuperer ce qu'il y a avant l'etoile
-    // puis retourner tous les mots possibles apres l'etoile
+        // sinon recuperer ce qu'il y a avant l'etoile
+        // puis retourner tous les mots possibles apres l'etoile
     } else {
         if (findUntilStar(n, s, path)) {
             findAfterStar(path.back()->left, path, visited);
@@ -370,7 +370,7 @@ void Arbre::findAfterStar(Node* n, vector<Node*> &path, vector<Node*> &visited) 
             n = n->left;
             findAfterStar(n, path, visited);
 
-        // si on ne peut plus aller a droite, alors on rebrousse chemin
+            // si on ne peut plus aller a droite, alors on rebrousse chemin
         } else if (n->right != nullptr && isNodeUnvisited(n->right, visited)) {
             n = n->right;
             findAfterStar(n,  path, visited);

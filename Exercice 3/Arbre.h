@@ -48,7 +48,7 @@ public:
     int getCompteur() const;
 
 
-        //const char& max() const;
+    //const char& max() const;
     //const Node& _max(Node*)const;
 
     //const char& min() const ;

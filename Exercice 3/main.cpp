@@ -5,46 +5,124 @@
 
 using namespace std;
 
+void menu();
+void mainMenu();
+void optionsMenu();
+void options(Arbre*);
+void fillDico(Arbre*, const string&);
+int choice1 = 0;
+int choice2 = 3;
+
 int main() {
+    menu();
+    return 0;
+}
 
-    string path = "../Test_files/test.dico";
-    Arbre a;
+void menu() {
+    do {
+        choice2 = 0;
+        mainMenu();
+        Arbre a;
+        Arbre* a_ptr = &a;
 
-    fstream inputFile(path);
+        switch(choice1) {
+            case 0:
+                break;
+            case 1:
+                fillDico(a_ptr, "alain");
+                options(a_ptr);
+                break;
+            case 2:
+                fillDico(a_ptr, "g");
+                options(a_ptr);
+                break;
+            case 3:
+                fillDico(a_ptr, "g1");
+                options(a_ptr);
+                break;
+            case 4:
+                fillDico(a_ptr, "guillaume");
+                options(a_ptr);
+                break;
+            case 5:
+                fillDico(a_ptr, "test");
+                options(a_ptr);
+                break;
+            default:
+                break;
+        }
+    } while(choice1 != 0);
+}
+
+void options(Arbre* a_ptr) {
+    do {
+        optionsMenu();
+        switch(choice2) {
+            case 0:
+                exit(0);
+            case 1:
+                cout << *a_ptr << endl;
+                break;
+            case 2: {
+                cout << "Type the word : ";
+                string to_search;
+                cin >> to_search;
+                cout << a_ptr->chercherMot(to_search) << endl;
+                break;
+            }
+
+            case 3: {
+                cout << "Type the word : ";
+                string to_delete;
+                cin >> to_delete;
+                a_ptr->chercherMot(to_delete);
+                break;
+            }
+            case 4: {
+                cout << "Number of words : " << a_ptr->getCompteur() << endl;
+                break;
+            }
+            case 5: {
+                break;
+            }
+            default:
+                break;
+        }
+    } while(choice2 !=5);
+}
+
+void mainMenu() {
+    cout << "Choose a dictionnary" << endl;
+    cout << "1 - alain" << endl;
+    cout << "2 - g" << endl;
+    cout << "3 - g1" << endl;
+    cout << "4 - guillaume" << endl;
+    cout << "5 - test" << endl;
+    cout << "0 - Exit" << endl;
+    cout << "Please choose: ";
+    cin >> choice1;
+}
+
+void optionsMenu() {
+    cout << "Functions Menu" << endl;
+    cout << "1 - Print tree" << endl;
+    cout << "2 - Search a word (add a * to get all words with same root : arb*)" << endl;
+    cout << "3 - Delete a word" << endl;
+    cout << "4 - Get number of words" << endl;
+    cout << "5 - Change dictionnary" << endl;
+    cout << "0 - Exit" << endl;
+    cout << "Please choose: ";
+    cin >> choice2;
+}
+
+void fillDico(Arbre* a_ptr, const string& filename) {
+
+    string path = "../Test_files/";
+    fstream inputFile(path + filename + ".dico");
     string word;
 
     while (getline(inputFile, word)) {
-        cout << word << endl;
-        a.firstAjouterMot(word);
+        a_ptr->firstAjouterMot(word);
     }
     inputFile.close();
-    a.firstAjouterMot("arborescence");
-    cout << a.getCompteur() << endl;
-
-    cout << a << endl;
-    //cout << a.chercherMot("abas") << endl;
-    //cout << a.chercherMot("martin") << endl;
-
-    cout << a.chercherMot("arborescence") << endl;
-    a.enleverMot("abas");
-    a.enleverMot("las");
-    cout << a << endl;
-    a.enleverMot("lasse");
-    cout << a << endl;
-    a.enleverMot("bas");
-    cout << a << endl;
-    a.enleverMot("arbre");
-    cout << a << endl;
-    a.firstAjouterMot("arborescence");
-    cout << a.chercherMot("arborescence") << endl;
-    cout << a << endl;
-    a.enleverMot("arbuste");
-    cout << a << endl;
-    a.firstAjouterMot("liton");
-    cout << a << endl;
-    a.firstAjouterMot("literie");
-    cout << a << endl;
-    a.enleverMot("abas");
-    cout << a << endl;
-
 }
