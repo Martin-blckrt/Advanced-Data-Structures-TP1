@@ -70,12 +70,11 @@ void options(Arbre* a_ptr) {
                 cout << a_ptr->chercherMot(to_search) << endl;
                 break;
             }
-
             case 3: {
                 cout << "Type the word : ";
                 string to_delete;
                 cin >> to_delete;
-                a_ptr->chercherMot(to_delete);
+                a_ptr->enleverMot(to_delete);
                 break;
             }
             case 4: {

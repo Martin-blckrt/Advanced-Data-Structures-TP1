@@ -4,6 +4,8 @@
 
 #include "Arbre.h"
 #include <iostream>
+#include <algorithm>
+#include <utility>
 
 using namespace std;
 
@@ -13,32 +15,21 @@ Arbre :: Arbre() {
     cpt = 0;
 }
 
-// Constructeur de copie
-Arbre :: Arbre(const Arbre& source) {
-
-}
-
 // Destructeur
-Arbre :: ~Arbre() {
-
-}
+Arbre :: ~Arbre() = default;
 
 int Arbre::getCompteur() const{
     return cpt;
 }
 
-bool Arbre::estVide() const {
-    return root == nullptr;
-}
-
 // Exercice
 void Arbre::firstAjouterMot(string s)
 {
-    ajouterMot(s, root, nullptr);
+    ajouterMot(std::move(s), root, nullptr);
 
 }
 
-void Arbre::enleverMot(string s) {
+void Arbre::enleverMot(const string& s) {
     if (chercherMot(s)) {
         if (cpt > 1) {
             _enleverMot(root->right, s);
@@ -112,10 +103,10 @@ void Arbre::_enleverMot(Node* start, string s) {
     compteur = 0;
 
     for (char i : s) {
-        while (start->data != i) {
+        while (currentNode->data != i) {
             if (compteur != stop) {
-                previousNode = start;
-                start = start->right;
+                previousNode = currentNode;
+                currentNode = currentNode->right;
                 compteur += 1;
             }
             else {
@@ -126,43 +117,43 @@ void Arbre::_enleverMot(Node* start, string s) {
         if (compteur == stop) {
 
             if (stop == indLastRightChild) {
-                if (start->right->data != i) {
+                if (currentNode->right->data != i) {
                     if (compteur == 0) {
-                        root->right = start->right;
+                        root->right = currentNode->right;
                     }
                     else {
-                        if (previousNode->left == start) {
-                            previousNode->left = start->right;
+                        if (previousNode->left == currentNode) {
+                            previousNode->left = currentNode->right;
                         }
                         else {
-                            previousNode->right = start->right;
+                            previousNode->right = currentNode->right;
                         }
                     }
 
                 }
                 else {
-                    previousNode = start;
-                    start = start->right;
+                    previousNode = currentNode;
+                    currentNode = currentNode->right;
                     previousNode->right = nullptr;
                 }
             }
             else {
                 if (i == s.back()) {
-                    start->isEndOfWord = false;
+                    currentNode->isEndOfWord = false;
                     break;
                 }
             }
 
 
-            while (start->left != nullptr) {
-                nextNode = start->left;
-                start->left = nullptr;
-                start = nextNode;
+            while (currentNode->left != nullptr) {
+                nextNode = currentNode->left;
+                currentNode->left = nullptr;
+                currentNode = nextNode;
             }
             break;
         }
-        previousNode = start;
-        start = start->left;
+        previousNode = currentNode;
+        currentNode = currentNode->left;
         compteur += 1;
     }
 }
@@ -229,10 +220,11 @@ void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
         prev->right = newNode;
     else {
         // si on est sur un pointeur nul et que l'on est juste "en dessous" de précédent, alors on est en train d'ajouter une fin à un mot existant
-        if (cur == nullptr && prev->left == cur)
-            prev->left = newNode;
+        //if (cur == nullptr && prev->left == cur)
+            //prev->left = newNode;
             // sinon on est en train d'ajouter une "alternative" à la lettre précédente
-        else if (prev->left == cur)
+        //else
+        if (prev->left == cur)
             prev->left = newNode;
         else
             prev->right = newNode;
@@ -248,7 +240,7 @@ void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
         brutePlaceWord(s.erase(0,1), newNode);
 }
 
-void Arbre :: brutePlaceWord(string s, Node* cur) {
+void Arbre :: brutePlaceWord(const string& s, Node* cur) {
 
     // on place toutes les lettres les unes à la suite des autres
     for (char letter : s) {
@@ -260,7 +252,7 @@ void Arbre :: brutePlaceWord(string s, Node* cur) {
     cpt += 1;
 }
 
-void Arbre::afficherArbre(const string prefix, Node* n, bool isLeftNode) const{
+void Arbre::afficherArbre(const string& prefix, Node* n, bool isLeftNode) const{
     //https://stackoverflow.com/questions/36802354/print-binary-tree-in-a-pretty-way-using-c
     if (n != nullptr) {
 
@@ -280,8 +272,8 @@ ostream &operator<<(ostream & output, const Arbre& a) {
 }
 
 
-bool Arbre::chercherMot(const string s) {
-    if (s.size() == 0)
+bool Arbre::chercherMot(const string& s) {
+    if (s.empty())
         return false;
     else if (s.find('*') != string::npos)
         return chercherMots(root, s);
@@ -392,7 +384,7 @@ bool Arbre::isNodeUnvisited(Node* node, vector<Node*> &visited) {
     return true;
 }
 
-void Arbre::printWord(vector<Node*> path) {
+void Arbre::printWord(const vector<Node*>& path) {
     string word;
     for (auto node : path) {
         word.push_back(node->data);
