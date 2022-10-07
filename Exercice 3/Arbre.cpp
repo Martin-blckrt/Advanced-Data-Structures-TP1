@@ -23,12 +23,6 @@ int Arbre::getCompteur() const{
 }
 
 // Exercice
-void Arbre::firstAjouterMot(string s)
-{
-    ajouterMot(std::move(s), root, nullptr);
-
-}
-
 void Arbre::enleverMot(const string& s) {
     if (chercherMot(s)) {
         if (cpt > 1) {
@@ -156,6 +150,12 @@ void Arbre::_enleverMot(Node* start, string s) {
         currentNode = currentNode->left;
         compteur += 1;
     }
+}
+
+void Arbre::firstAjouterMot(string s)
+{
+    ajouterMot(std::move(s), root, nullptr);
+
 }
 
 void Arbre::ajouterMot(string s, Node* cur, Node* prev)

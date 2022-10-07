@@ -11,7 +11,7 @@ void optionsMenu();
 void options(Arbre*);
 void fillDico(Arbre*, const string&);
 int choice1 = 0;
-int choice2 = 3;
+int choice2 = 5;
 
 int main() {
     menu();
@@ -67,27 +67,35 @@ void options(Arbre* a_ptr) {
                 cout << "Type the word : ";
                 string to_search;
                 cin >> to_search;
-                cout << a_ptr->chercherMot(to_search) << endl;
+                a_ptr->chercherMot(to_search) ? cout << to_search + " exists.\n" : cout << to_search + " does not exist.\n";
                 break;
             }
             case 3: {
+                cout << "Type the word : ";
+                string to_add;
+                cin >> to_add;
+                cout << "Ajout en cours...\n";
+                a_ptr->firstAjouterMot(to_add);
+                break;
+            }
+            case 4: {
                 cout << "Type the word : ";
                 string to_delete;
                 cin >> to_delete;
                 a_ptr->enleverMot(to_delete);
                 break;
             }
-            case 4: {
+            case 5: {
                 cout << "Number of words : " << a_ptr->getCompteur() << endl;
                 break;
             }
-            case 5: {
+            case 6: {
                 break;
             }
             default:
                 break;
         }
-    } while(choice2 !=5);
+    } while(choice2 !=6);
 }
 
 void mainMenu() {
@@ -106,9 +114,10 @@ void optionsMenu() {
     cout << "Functions Menu" << endl;
     cout << "1 - Print tree" << endl;
     cout << "2 - Search a word (add a * to get all words with same root : arb*)" << endl;
-    cout << "3 - Delete a word" << endl;
-    cout << "4 - Get number of words" << endl;
-    cout << "5 - Change dictionnary" << endl;
+    cout << "3 - Add a word" << endl;
+    cout << "4 - Delete a word" << endl;
+    cout << "5 - Get number of words" << endl;
+    cout << "6 - Change dictionnary" << endl;
     cout << "0 - Exit" << endl;
     cout << "Please choose: ";
     cin >> choice2;
