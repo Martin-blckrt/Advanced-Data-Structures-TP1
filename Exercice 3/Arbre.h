@@ -52,7 +52,7 @@ public:
     bool _chercherMot(Node* , std::string);
     bool chercherMots(Node* , std::string);
     bool findUntilStar(Node* , std::string, std::vector<Node*>&);
-    void findAfterStar(Node*, std::vector<Node*>&, std::vector<Node*>&);
+    void findAfterStar(Node*, std::vector<Node*>&, std::vector<Node*>&, int);
     static bool isNodeUnvisited(Node*, std::vector<Node*>&);
     static void printWord(const std::vector<Node*>&);
 

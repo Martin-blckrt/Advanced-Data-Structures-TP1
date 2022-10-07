@@ -164,6 +164,9 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
         Node *previous = prev;
         Node *current = cur;
 
+        if (s == "de")
+            cout<<"here";
+
         char letter = s.at(0);
 
         // on se déplace vers la droite jusqu'à
@@ -204,14 +207,15 @@ void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
         prev->right = newNode;
     }
     else {
-        if (cur == nullptr)
-            prev->right = newNode;
+        // je viens de "descendre" (mon prev est au dessus de moi)
+        if (prev->right != cur) {
+            prev->left = newNode;
+            // si je ne suis pas nouveau et que j'avais une autre branche
+            if (cur != nullptr)
+                newNode->right = cur;
+        }
         else {
-            if (prev->right != cur)
-                prev->left = newNode;
-            else {
-                prev->right = newNode;
-            }
+            prev->right = newNode;
             newNode->right = cur;
         }
     }
@@ -291,13 +295,13 @@ bool Arbre::chercherMots(Node* n, string s) {
     // si le mot est etoile, retourner tous les mots du dico
     if (s.at(0) == '*') {
         path.push_back(n);
-        findAfterStar(n, path, visited);
+        findAfterStar(n, path, visited, path.size());
 
         // sinon recuperer ce qu'il y a avant l'etoile
         // puis retourner tous les mots possibles apres l'etoile
     } else {
         if (findUntilStar(n, s, path)) {
-            findAfterStar(path.back()->left, path, visited);
+            findAfterStar(path.back()->left, path, visited, path.size());
         } else
             cout << "This word isn't in our dictionary !" << endl;
     }
@@ -326,7 +330,7 @@ bool Arbre::findUntilStar(Node* n, string s, vector<Node*> &path) {
     return true;
 }
 
-void Arbre::findAfterStar(Node* n, vector<Node*> &path, vector<Node*> &visited) {
+void Arbre::findAfterStar(Node* n, vector<Node*> &path, vector<Node*> &visited, int size) {
 
     // tant qu'on n'a pas exploré toutes les possibilités
     if (!path.empty()) {
@@ -342,20 +346,20 @@ void Arbre::findAfterStar(Node* n, vector<Node*> &path, vector<Node*> &visited) 
         if (isNodeUnvisited(n, visited))
             visited.push_back(n);
 
-        // si on ne peut plus aller à gauche, alors on passe à la droite
+        // si on peut descendre, on descend
         if (n->left != nullptr && isNodeUnvisited(n->left, visited)) {
             path.push_back(n);
             n = n->left;
-            findAfterStar(n, path, visited);
-
-            // si on ne peut plus aller a droite, alors on rebrousse chemin
+            findAfterStar(n, path, visited, size);
+            // si on ne peut plus aller à gauche, alors on passe à la droite
         } else if (n->right != nullptr && isNodeUnvisited(n->right, visited)) {
             n = n->right;
-            findAfterStar(n,  path, visited);
-        } else {
+            findAfterStar(n,  path, visited, size);
+            // si on ne peut plus aller a droite, alors on rebrousse chemin
+        } else if (path.size() > size) {
             n = path.back();
             path.pop_back();
-            findAfterStar(n,  path, visited);
+            findAfterStar(n,  path, visited, size);
         }
     }
 }
