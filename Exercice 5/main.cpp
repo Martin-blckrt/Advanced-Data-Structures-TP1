@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <vector>
 
 #include "List.h"
 #include "Node.h"
@@ -17,7 +18,13 @@ int main () {
     for (int i = 0; i < 10; i++) {
         list.addNode();
     }
+    while(true){
+        list.tab->suivant->run_thread = true;
+        list.tab->suivant->send(1);
 
+        list.tab->suivant->run_thread = true;
+        list.tab->suivant->send(1);
+    }
 
     return 0;
 }

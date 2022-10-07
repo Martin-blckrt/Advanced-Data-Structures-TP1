@@ -1,7 +1,3 @@
-//
-// Created by marti on 02/10/2022.
-//
-
 #include "List.h"
 #include <thread>
 using namespace std;
@@ -34,8 +30,11 @@ void List<Node> :: addNode() {
         Node* prev = &tab[0];
         while (prev->suivant != nullptr)
             prev = prev->suivant;
-        Node* newNode = new Node(cpt, nullptr , prev);
+        Node *newNode = new Node(cpt, nullptr , prev);
         prev->suivant = newNode;
+
+        thread thr(&Node::send, newNode, cpt);
+        thr.detach();
         queue ++;
         cpt ++;
     }

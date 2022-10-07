@@ -1,24 +1,22 @@
-//
-// Created by marti on 02/10/2022.
-//
-
 #include "Node.h"
+#include <vector>
+#include <pthread.h>
 
-#ifndef EXERCICE_2_LIST_H
-#define EXERCICE_2_LIST_H
+#ifndef EXERCICE5_LIST_H
+#define EXERCICE5_LIST_H
 
 template <typename Node>
 class List {
 public:
 
     List();
-    List(int);
+    explicit List(int);
     ~List();
 
     void addNode();
 
-private:
     Node* tab;
+private:
     int tete;
     int queue;
     int tailleMax;
@@ -26,4 +24,4 @@ private:
 };
 
 
-#endif //EXERCICE_2_LIST_H
+#endif //EXERCICE5_LIST_H
