@@ -161,8 +161,8 @@ void Arbre::_enleverMot(Node* start, string s) {
 void Arbre::ajouterMot(string s, Node* cur, Node* prev)
 {
     if (!chercherMot(s)) {
-        Node* previous = prev;
-        Node* current = cur;
+        Node *previous = prev;
+        Node *current = cur;
 
         char letter = s.at(0);
 
@@ -173,15 +173,9 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
             previous = current;
             current = current->right;
         }
-        // si on est arrivé tout à droite de l'arbre (current == nullptr)
-        // ou si on est juste à droite de la lettre précédente
-        // alors on n'a pas à réutiliser une structure existante et on peut juste placer notre mot "tout droit"
-        if (current == nullptr || current->data > letter) {
-            prepareBrutePlace(s, current, previous);
 
-            // si on est situé sur la lettre en question
-        } else if (current->data == letter) {
-
+        // si on est situé sur la lettre en question
+        if (current != nullptr && current->data == letter) {
             // si la taille du mot vaut 1 et qu'on est sur la bonne lettre, alors on a fini le mot
             if (s.size() == 1) {
                 current->isEndOfWord = true;
@@ -189,45 +183,37 @@ void Arbre::ajouterMot(string s, Node* cur, Node* prev)
             }
                 // si le mot continue après, on "descend" d'un étage pour poursuivre l'ajout à l'étage d'en dessous sans la première lettre
             else {
-
-                // si on se situe actuellement sur la fin d'un mot
-                // ou que previous est à gauche (cad une alternative précédente à la bonne lettre)
-                // alors précédent prend la valeur de cette lettre avant de "descendre"
-                //if (current->isEndOfWord || previous->right == current || previous->left == current)
+                // avant de "descendre", on update le parent
                 previous = current;
-
                 current = current->left;
-                ajouterMot(s.erase(0,1), current, previous);
+                ajouterMot(s.erase(0, 1), current, previous);
             }
         }
-    }
-    else
+            // si on n'est pas sur la lettre en question alors on peut juste placer notre mot "tout droit"
+        else
+            prepareBrutePlace(s, current, previous);
+    } else
         cout << "Le mot " << s << " est deja dans le dictionnaire !" << endl;
 }
 
 void Arbre::prepareBrutePlace(string s, Node* cur, Node* prev) {
     Node* newNode = new Node(s.at(0));
 
-    // si on n'est pas sur un pointeur nul, alors il faut assurer la continuité du noeud avant de s'insérer
-    if (cur != nullptr) {
-        if (newNode->data < cur->data)
-            newNode->right = prev->left;
-        else
-            newNode->right = prev->right;
-    }
-
-    if (prev == root)
+    if (prev == root) {
+        newNode->right = prev->right;
         prev->right = newNode;
+    }
     else {
-        // si on est sur un pointeur nul et que l'on est juste "en dessous" de précédent, alors on est en train d'ajouter une fin à un mot existant
-        //if (cur == nullptr && prev->left == cur)
-            //prev->left = newNode;
-            // sinon on est en train d'ajouter une "alternative" à la lettre précédente
-        //else
-        if (prev->left == cur)
-            prev->left = newNode;
-        else
+        if (cur == nullptr)
             prev->right = newNode;
+        else {
+            if (prev->right != cur)
+                prev->left = newNode;
+            else {
+                prev->right = newNode;
+            }
+            newNode->right = cur;
+        }
     }
 
     // si il ne reste plus qu'une lettre dans le mot, alors le nouveau noeud est le dernier et le mot est fini
