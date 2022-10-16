@@ -15,7 +15,7 @@ public:
 
     void addNode();
 
-    Node* tab;
+    Node* tab{};
 private:
     int tete;
     int queue;

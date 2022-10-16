@@ -8,6 +8,7 @@ List<Node*> :: List () {
     queue = 0;
     cpt = 0;
     tailleMax = 0;
+    tab = nullptr;
 }
 
 template <>
