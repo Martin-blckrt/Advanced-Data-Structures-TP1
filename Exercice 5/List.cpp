@@ -31,7 +31,7 @@ void List<Node> :: addNode() {
         Node* prev = &tab[0];
         while (prev->suivant != nullptr)
             prev = prev->suivant;
-        Node *newNode = new Node(cpt, nullptr , prev);
+        Node *newNode = new Node(rand() % 10 + 1, nullptr , prev);
         prev->suivant = newNode;
 
         thread thr(&Node::send, newNode, cpt);
