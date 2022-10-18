@@ -14,6 +14,7 @@ public:
     ~List();
 
     void addNode();
+    int getLength();
 
     Node* tab{};
 private:

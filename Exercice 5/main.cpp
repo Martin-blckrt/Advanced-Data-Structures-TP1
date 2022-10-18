@@ -8,7 +8,7 @@
 using namespace std;
 
 void menu();
-void mainMenu();
+void mainMenu(int);
 int choice = 0;
 
 int main() {
@@ -18,9 +18,9 @@ int main() {
 }
 
 void menu() {
-    auto* list = new List<Node>(20);
+    auto* list = new List<Node>(50);
     do {
-        mainMenu();
+        mainMenu(list->getLength());
 
         switch(choice) {
             case 0:
@@ -41,7 +41,7 @@ void menu() {
                     cout << "\nList only has element 0, fill it !" << endl;
                 break;
             case 4:
-                list = new List<Node>(20);
+                list = new List<Node>(50);
                 break;
             default:
                 break;
@@ -49,8 +49,8 @@ void menu() {
     } while(choice != 0);
 }
 
-void mainMenu() {
-    cout << "\nSelect an action" << endl;
+void mainMenu(int l) {
+    cout << "\nSelect an action - your list currently has " << l << " nodes (maximum 50)" << endl;
     cout << "1 - Add 10 nodes to the list" << endl;
     cout << "2 - Add a node to the list" << endl;
     cout << "3 - Compute sum" << endl;

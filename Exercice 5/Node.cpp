@@ -12,9 +12,10 @@ Node::Node() {
     run_thread = false;
 }
 
-Node::Node(const int &data_item, Node *next_ptr, Node *pred_ptr) {
-    id = data_item;
-    cout << "Node id : " << data_item << endl;
+Node::Node(const int &number, const int &data_item, Node *next_ptr, Node *pred_ptr) {
+    id = number;
+    value = data_item;
+    cout << "Node " << id << " has value : " << data_item << endl;
     suivant = next_ptr;
     precedent = pred_ptr;
     run_thread = false;
@@ -24,10 +25,10 @@ void Node::send(int i) {
     if (run_thread) {
         run_thread = false;
         if (suivant != nullptr) {
-            cout << "At node " << id << ", sum is : " << i + id << endl;
+            cout << "At node " << id << ", sum is : " << i + value << endl;
             suivant->run_thread = true;
-            suivant->send(i + id);
+            suivant->send(i + value);
         } else
-            cout << "\nTotal sum is : " << i + id << endl;
+            cout << "\nTotal sum is : " << i + value << endl;
     }
 }
