@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    string path = "data/later.txt";
+    string path = "data/familleMasse.txt";
     Arbre a;
 
     vector<member> members = getMembersFromFile(path);
@@ -28,17 +28,17 @@ int main() {
     cout << "Personnes ayant des yeux gris :" << endl;
     a.getSameEyedPeople("grey", a.getRoot());
 
-    cout << "\n\nAncetres d'Ava Louri ayant les memes yeux qu'elle :" << endl;
-    a.getSameEyedAncestors("brown", "avalouri", a.getRoot());
+    cout << "\n\nAncetres d'Isa Masse ayant les memes yeux qu'elle :" << endl;
+    a.getSameEyedAncestors("brown", "isamasse", a.getRoot());
 
-    cout << "\n\nDescendance de Lucas Delteil Prefixe: " << endl;
-    a.getLineageOfPersonPreOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
+    cout << "\n\nDescendance de Michel Masse Prefixe: " << endl;
+    a.getLineageOfPersonPreOrder(a.getPersonNode("michelmasse", a.getRoot()), a.getRoot());
 
-    cout << "\n\nDescendance de Lucas Delteil Infixe: " << endl;
-    a.getLineageOfPersonInOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
+    cout << "\n\nDescendance de Michel Masse Infixe: " << endl;
+    a.getLineageOfPersonInOrder(a.getPersonNode("michelmasse", a.getRoot()), a.getRoot());
 
-    cout << "\n\nDescendance de Lucas Delteil Postfixe: " << endl;
-    a.getLineageOfPersonPostOrder(a.getPersonNode("lucasdelteil", a.getRoot()), a.getRoot());
+    cout << "\n\nDescendance de Michel Masse Postfixe: " << endl;
+    a.getLineageOfPersonPostOrder(a.getPersonNode("michelmasse", a.getRoot()), a.getRoot());
 
     return 0;
 }
