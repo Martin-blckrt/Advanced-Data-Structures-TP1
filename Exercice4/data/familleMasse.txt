@@ -1,0 +1,8 @@
+first;first;michel;masse;1942;grey
+spouse;michelmasse;louise;bedard;1945;brown
+firstchild;michelmasse;emma;masse;1969;brown
+sibling;emmamasse;leo;masse;1972;brown
+sibling;leomasse;paul;masse;1974;green
+spouse;paulmasse;isa;leroux;1970;grey
+firstchild;paulmasse;theo;masse;2001;green
+sibling;paulmasse;jade;masse;2003;brown

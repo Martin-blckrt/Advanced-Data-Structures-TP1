@@ -1,7 +1,0 @@
-first;first;clement;delteil;2000;grey
-spouse;clementdelteil;marie;latrille;2001;brown
-sibling;clementdelteil;lucas;delteil;2003;green
-firstchild;clementdelteil;sacha;delteil;2022;brown
-firstchild;sachadelteil;thomas;delteil;2022;green
-spouse;sachadelteil;alexandra;blaes;2018;grey
-spouse;thomasdelteil;ava;louri;2017;brown
