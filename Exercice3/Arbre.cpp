@@ -256,6 +256,7 @@ void Arbre::afficherArbre(const string& prefix, Node* n, bool isLeftNode) const 
     }
 }
 
+
 ostream& operator<<(ostream& output, const Arbre& a) {
     a.afficherArbre("", a.root, false);
     return output;
